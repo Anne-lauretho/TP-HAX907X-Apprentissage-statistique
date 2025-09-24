@@ -7,7 +7,10 @@ seaborn
 
 
 # Ignore virtual environment folder
-venv/
+.venv/
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
 
 # Ignore requirements file
 requirements.txt

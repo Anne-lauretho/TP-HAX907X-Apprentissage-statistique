@@ -5,3 +5,9 @@ mathtplotlib
 scikit-learn
 seaborn
 
+
+# Ignore virtual environment folder
+venv/
+
+# Ignore requirements file
+requirements.txt

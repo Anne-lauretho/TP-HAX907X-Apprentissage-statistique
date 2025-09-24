@@ -250,7 +250,9 @@ t0 = time()
 Cs = 10. ** np.arange(-5, 6)
 scores = []
 for C in Cs:
-    # TODO ...
+    clf = SVC(kernel="linear", C=C)
+    clf.fit(X_train, y_train)
+    scores.append(clf.score(X_test, y_test))
 
 ind = np.argmax(scores)
 print("Best C: {}".format(Cs[ind]))
@@ -269,7 +271,9 @@ t0 = time()
 
 #%%
 # predict labels for the X_test images with the best classifier
-# clf =  ... TODO
+clf = SVC(kernel="linear", C=Cs[ind])
+clf.fit(X_train, y_train)
+y_pred = clf.predict(X_test)
 
 print("done in %0.3fs" % (time() - t0))
 # The chance level is the accuracy that will be reached when constantly predicting the majority class.
@@ -311,16 +315,17 @@ def run_svm_cv(_X, _y):
           (_clf_linear.score(_X_train, _y_train), _clf_linear.score(_X_test, _y_test)))
 
 print("Score sans variable de nuisance")
-# TODO ... use run_svm_cv on data
+run_svm_cv(X, y)
 
 print("Score avec variable de nuisance")
-n_features = X.shape[1]
+n_samples = X.shape[0]
 # On rajoute des variables de nuisances
 sigma = 1
-noise = sigma * np.random.randn(n_samples, 300, )
-# ... TODO Add the noisy variables to the input data and permut randomly the variables: 
-# this creates a matrix X_noisy
-# TODO ... use run_svm_cv on noisy data
+noise = sigma * np.random.randn(n_samples, 300)
+X_noisy = np.c_[X, noise]  # concaténation bruit
+np.random.shuffle(X_noisy.T)
+
+run_svm_cv(X_noisy, y)
 
 #%%
 # Q6
@@ -328,4 +333,8 @@ print("Score apres reduction de dimension")
 
 n_components = 20  # jouer avec ce parametre
 pca = PCA(n_components=n_components).fit(X_noisy)
-# ... TODO
+X_pca = pca.transform(X_noisy)
+
+run_svm_cv(X_pca, y)
+
+# %%

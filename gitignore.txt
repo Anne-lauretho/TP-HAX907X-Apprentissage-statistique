@@ -1,1 +1,7 @@
 #A remplir
+
+numpy 
+mathtplotlib
+scikit-learn
+seaborn
+

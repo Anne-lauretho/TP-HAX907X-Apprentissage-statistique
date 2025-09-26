@@ -1,107 +1,59 @@
 ---
-title: "TP : Support Vector Machines"
-author: 
-- "STETSUN Kateryna"
-- "THOMAS Anne-Laure"
-date: today
-format: html
+format:
+  html:
+    title-block: false
+    toc: false   
 ---
+<!-- Page de garde -->
+<div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; text-align:center; font-family:Arial, sans-serif;">
+
+<h1 style="font-size:3em; margin-bottom:0.5em;">TP : Support Vector Machines</h1>
+
+<hr style="width:50%; margin:1em 0;">
+
+<h3>Réalisé par :</h3>
+<p><strong>STETSUN Kateryna</strong><br>
+<strong>THOMAS Anne-Laure</strong></p>
+
+<p style="margin-top:2em;">Date : <span id="today"></span></p>
+
+</div>
+
+<script>
+  // insère la date automatiquement en français
+  document.getElementById("today").textContent = new Date().toLocaleDateString("fr-FR");
+</script>
+
+<div style="page-break-after: always;"></div>
 
 # Introduction
 
-Les machines à vecteurs de support (SVM), introduites par Vapnik dans les années 1990, sont devenues l'une des méthodes de classification supervisée les plus populaires. Leur succès s'explique par leur capacité à construire des règles de décision linéaires, appelées hyperplans séparateurs, tout en permettant d'aborder des problèmes où les données ne sont pas directement séparables dans l'espace d’entrée.
+Les machines à vecteurs de support (SVM), introduites par Vapnik dans les années 1990, sont devenues l'une des méthodes de classification supervisée les plus populaires. Leur succès s'explique par leur capacité à construire des règles de décision linéaires, appelées hyperplans séparateurs, tout en permettant d'aborder des problèmes où les données ne sont pas directement séparables dans l'espace d'entrée.
 
 Le principe des SVM repose sur la recherche d'un hyperplan qui maximise la marge entre les classes. Dans le cas linéaire, cet hyperplan est directement construit dans l'espace des variables initiales. Dans les cas plus complexes, une transformation implicite des données dans un espace de dimension supérieure est effectuée grâce au `kernel trick`. Cette astuce permet de manipuler uniquement les produits scalaires dans l'espace transformé, en utilisant une fonction noyau. Parmi les noyaux courants, on retrouve le noyau linéaire, le noyau polynomial, le noyau gaussien RBF ou encore le noyau sigmoïde.
 
 L'apprentissage consiste alors à résoudre un problème d'optimisation sous contraintes, dans lequel un paramètre de régularisation, noté `C`, contrôle la complexité du modèle et le compromis entre maximisation de la marge et minimisation des erreurs de classification.
 
-L'objectif de ce TP est de mettre en pratique ces concepts à travers différents jeux de données, simulés et réels. Nous utiliserons pour cela la bibliothèque `scikit-learn`, qui propose une implémentation performante des SVM via la librairie libsvm. Nous chercherons notamment à :\
-- comparer les performances de différents noyaux (linéaire, polynomial),\
-- étudier l'influence des paramètres de régularisation,\
-- observer l'impact de variables de nuisance sur les performances,\
-- améliorer la généralisation grâce à des techniques de réduction de dimension,\
-- et enfin, discuter des biais possibles liés au prétraitement des données.
+L'objectif de ce TP est de mettre en pratique ces concepts à travers différents jeux de données, simulés et réels. Nous utiliserons pour cela la bibliothèque `scikit-learn`, qui propose une implémentation performante des SVM via la librairie libsvm.
 
-# 1. Jeu de données jouet (deux gaussiennes)
+# Mise en oeuvre
+
+## 1. Jeu de données jouet (deux gaussiennes)
+
+Pour commencer, ...
 
 ```{python}
-import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.svm import SVC
 
-from svm_source import *
-from sklearn import svm
-from sklearn import datasets
-from sklearn.utils import shuffle
-from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.datasets import fetch_lfw_people
-from sklearn.decomposition import PCA
-from time import time
-
-scaler = StandardScaler()
-
-import warnings
-warnings.filterwarnings("ignore")
-
-plt.style.use('ggplot')
-
-n1 = 200
-n2 = 200
-mu1 = [1., 1.]
-mu2 = [-1./2, -1./2]
-sigma1 = [0.9, 0.9]
-sigma2 = [0.9, 0.9]
-X1, y1 = rand_bi_gauss(n1, n2, mu1, mu2, sigma1, sigma2)
-
-plt.show()
-plt.close("all")
-plt.ion()
-plt.figure(1, figsize=(15, 5))
-plt.title('First data set')
-plot_2d(X1, y1)
-
-X_train = X1[::2]
-Y_train = y1[::2].astype(int)
-X_test = X1[1::2]
-Y_test = y1[1::2].astype(int)
-
-# fit the model with linear kernel
-clf = SVC(kernel='linear')
-clf.fit(X_train, Y_train)
-
-# predict labels for the test data base
-y_pred = clf.predict(X_test)
-
-# check your score
-score = clf.score(X_test, Y_test)
-print('Score : %s' % score)
-
-# display the frontiere
-def f(xx):
-    """Classifier: needed to avoid warning due to shape issues"""
-    return clf.predict(xx.reshape(1, -1))
-
-plt.figure()
-frontiere(f, X_train, Y_train, w=None, step=50, alpha_choice=1)
-
-# Same procedure but with a grid search
-parameters = {'kernel': ['linear'], 'C': list(np.linspace(0.001, 3, 21))}
-clf2 = SVC()
-clf_grid = GridSearchCV(clf2, parameters, n_jobs=-1)
-clf_grid.fit(X_train, Y_train)
-
-# check your score
-print(clf_grid.best_params_)
-print('Score : %s' % clf_grid.score(X_test, Y_test))
-
-def f_grid(xx):
-    """Classifier: needed to avoid warning due to shape issues"""
-    return clf_grid.predict(xx.reshape(1, -1))
-
-# display the frontiere
-plt.figure()
-frontiere(f_grid, X_train, Y_train, w=None, step=50, alpha_choice=1)
 ```
 
+## 2. Comparaison du résultat avec un SVM basé sur noyau polynomial
+
 # Classification de visages
+
+## 4.
+
+## 5.
+
+## 6.
+
+## 7.

@@ -382,6 +382,24 @@ plt.figure()
 plt.imshow(np.reshape(clf.coef_, (h, w)))
 plt.show()
 
+#%% 
+# Qualitative evaluation of the predictions using matplotlib
+####################################################################
+# Look at the coefficients pour C=1e-5 et C=1e5
+coef_small = clf_small.coef_.ravel()
+coef_large = clf_large.coef_.ravel()
+
+
+fig, axes = plt.subplots(1, 2, figsize=(10, 5))
+
+axes[0].imshow(coef_small.reshape(h, w), cmap=plt.cm.seismic, interpolation="nearest")
+axes[0].set_title("Coefficients (C=1e-5)")
+
+axes[1].imshow(coef_large.reshape(h, w), cmap=plt.cm.seismic, interpolation="nearest")
+axes[1].set_title("Coefficients (C=1e5)")
+
+plt.tight_layout()
+plt.show()
 
 #%%
 # Q5

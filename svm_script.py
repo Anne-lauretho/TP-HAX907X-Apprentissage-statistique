@@ -11,6 +11,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.datasets import fetch_lfw_people
 from sklearn.decomposition import PCA
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+from sklearn.metrics import classification_report
 from time import time
 
 scaler = StandardScaler()
@@ -313,7 +315,6 @@ t0 = time()
 
 #%%
 # confusion matrix
-
 #small C
 clf_small = SVC(kernel="linear", C=1e-5)
 clf_small.fit(X_train, y_train)

@@ -277,6 +277,83 @@ print("Best score: {}".format(np.max(scores)))
 print("Predicting the people names on the testing set")
 t0 = time()
 
+
+#%%
+# calculons l`erreue 
+errors = []
+for C in Cs:
+    clf = SVC(kernel="linear", C=C)
+    clf.fit(X_train, y_train)
+    errors.append(1 - clf.score(X_test, y_test))
+
+# cherche min erreur
+best_ind = np.argmin(errors)
+best_C = Cs[best_ind]
+best_error = errors[best_ind]
+
+plt.figure()
+plt.plot(Cs, errors, marker="o")
+
+# plot erreue
+plt.scatter(best_C, best_error, color="red", s=100, zorder=5)
+
+plt.xscale("log")
+plt.xlabel("Paramètre de régularisation C")
+plt.ylabel("Erreur de prédiction")
+plt.title("Influence de C sur la performance")
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+
+
+print("Best C: {}".format(Cs[best_ind]))
+print("Best error: {}".format(np.min(errors)))
+print("Best accuracy: {}".format(1 - np.min(errors)))
+t0 = time()
+
+#%%
+# confusion matrix
+
+#small C
+clf_small = SVC(kernel="linear", C=1e-5)
+clf_small.fit(X_train, y_train)
+y_pred_small = clf_small.predict(X_test)
+
+cm_small = confusion_matrix(y_test, y_pred_small, labels=clf_small.classes_)
+disp_small = ConfusionMatrixDisplay(confusion_matrix=cm_small, display_labels=clf_small.classes_)
+
+# big C
+clf_large = SVC(kernel="linear", C=1e5)
+clf_large.fit(X_train, y_train)
+y_pred_large = clf_large.predict(X_test)
+
+cm_large = confusion_matrix(y_test, y_pred_large, labels=clf_large.classes_)
+disp_large = ConfusionMatrixDisplay(confusion_matrix=cm_large, display_labels=clf_large.classes_)
+
+# rows
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+# 0 = Tony Blair, 1 = Colin Powell)
+class_names = ['Tony Blair', 'Colin Powell']
+
+
+disp_small = ConfusionMatrixDisplay(confusion_matrix=cm_small,
+                                    display_labels=class_names)
+disp_small.plot(ax=axes[0], cmap="Blues", xticks_rotation='vertical', colorbar=False)
+axes[0].set_title("Confusion matrix (C=1e-5)")
+disp_large = ConfusionMatrixDisplay(confusion_matrix=cm_large,
+                                    display_labels=class_names)
+disp_large.plot(ax=axes[1], cmap="Blues", xticks_rotation='vertical', colorbar=False)
+axes[1].set_title("Confusion matrix (C=1e5)")
+
+
+plt.tight_layout()
+plt.show()
+
+#%% la meme chose mais en chifre
+from sklearn.metrics import classification_report
+print(classification_report(y_test, y_pred, target_names=names))
+
 #%%
 # predict labels for the X_test images with the best classifier
 clf = SVC(kernel="linear", C=Cs[ind])
@@ -341,8 +418,9 @@ run_svm_cv(X_noisy, y)
 # Q6
 print("Score apres reduction de dimension")
 
-n_components = 20  # jouer avec ce parametre
+n_components = 2  # jouer avec ce parametre
 pca = PCA(n_components=n_components).fit(X_noisy)
 X_pca = pca.transform(X_noisy)
 
 run_svm_cv(X_pca, y)
+# %%

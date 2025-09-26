@@ -94,10 +94,11 @@ y = iris.target
 X = X[y != 0, :2]
 y = y[y != 0]
 
-# split train test
+# split train test (say 25% for the test)
+# You can shuffle and then separate or you can just use train_test_split 
+#whithout shuffling (in that case fix the random state (say to 42) for reproductibility)
 X, y = shuffle(X, y)
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
-
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
 ###############################################################################
 # fit the model with linear vs polynomial kernel
 ###############################################################################
@@ -105,12 +106,13 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_
 #%%
 # Q1 Linear kernel
 
-# fit the model
+# fit the model and select the best hyperparameter C
 parameters = {'kernel': ['linear'], 'C': list(np.logspace(-3, 3, 200))}
 clf_linear = GridSearchCV(SVC(), parameters, cv=5)
 clf_linear.fit(X_train, y_train)
 
 # compute the score
+
 print('Generalization score for linear kernel: %s, %s' %
       (clf_linear.score(X_train, y_train),
        clf_linear.score(X_test, y_test)))
@@ -121,9 +123,11 @@ Cs = list(np.logspace(-3, 3, 5))
 gammas = 10. ** np.arange(1, 2)
 degrees = np.r_[1, 2, 3]
 
+# fit the model and select the best set of hyperparameters
 parameters = {'kernel': ['poly'], 'C': Cs, 'gamma': gammas, 'degree': degrees}
 clf_poly = GridSearchCV(SVC(), parameters, cv=5)
 clf_poly.fit(X_train, y_train)
+
 
 print(clf_grid.best_params_)
 print('Generalization score for polynomial kernel: %s, %s' %
@@ -136,6 +140,7 @@ print('Generalization score for polynomial kernel: %s, %s' %
 
 def f_linear(xx):
     return clf_linear.predict(xx.reshape(1, -1))
+
 def f_poly(xx):
     return clf_poly.predict(xx.reshape(1, -1))
 
@@ -318,11 +323,13 @@ print("Score sans variable de nuisance")
 run_svm_cv(X, y)
 
 print("Score avec variable de nuisance")
-n_samples = X.shape[0]
+n_features = X.shape[1]
 # On rajoute des variables de nuisances
 sigma = 1
-noise = sigma * np.random.randn(n_samples, 300)
-X_noisy = np.c_[X, noise]  # concaténation bruit
+noise = sigma * np.random.randn(n_samples, 300, ) 
+#with gaussian coefficients of std sigma
+X_noisy = np.concatenate((X, noise), axis=1)
+X_noisy = X_noisy[np.random.permutation(X.shape[0])]
 np.random.shuffle(X_noisy.T)
 
 run_svm_cv(X_noisy, y)
@@ -336,5 +343,3 @@ pca = PCA(n_components=n_components).fit(X_noisy)
 X_pca = pca.transform(X_noisy)
 
 run_svm_cv(X_pca, y)
-
-# %%

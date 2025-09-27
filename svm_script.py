@@ -281,7 +281,7 @@ t0 = time()
 
 
 #%%
-# calculons l`erreue 
+# calculons l`erreur
 errors = []
 for C in Cs:
     clf = SVC(kernel="linear", C=C)
@@ -437,7 +437,7 @@ run_svm_cv(X_noisy, y)
 # Q6
 print("Score apres reduction de dimension")
 
-n_components = 2  # jouer avec ce parametre
+n_components = 20  # jouer avec ce parametre
 pca = PCA(n_components=n_components).fit(X_noisy)
 X_pca = pca.transform(X_noisy)
 

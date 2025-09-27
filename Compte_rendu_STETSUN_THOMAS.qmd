@@ -7,11 +7,13 @@ format:
 
 <div style="text-align:center; padding:2em; font-family:Arial, sans-serif; height:100vh; display:flex; flex-direction:column; justify-content:space-between;">
 
-<div style="display:flex; justify-content:space-between; max-width:900px; margin:0 auto 3em auto;">
-  ![](images/Universite.png){height=100px style="margin-left:20px;"}
-  ![](images/ssd_mind_logo.png){height=100px style="margin-right:20px;"}
-</div>
+<div style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0 2em;">
+  <!-- Logo UM à gauche -->
+  <img src="images/Universite.png" style="height: 100px;">
 
+  <!-- Logo SSD-MIND à droite -->
+  <img src="images/ssd_mind_logo.png" style="height: 100px;">
+</div>
 
 <!-- Titre central -->
 <div>

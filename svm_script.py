@@ -310,7 +310,7 @@ plt.show()
 
 print("Best C: {}".format(Cs[best_ind]))
 print("Best error: {}".format(np.min(errors)))
-print("Best accuracy: {}".format(1 - np.min(errors)))
+print("Best accuracy(score): {}".format(1 - np.min(errors)))
 t0 = time()
 
 #%%
@@ -432,6 +432,42 @@ X_noisy = X_noisy[np.random.permutation(X.shape[0])]
 np.random.shuffle(X_noisy.T)
 
 run_svm_cv(X_noisy, y)
+
+#%%
+# Q5 - addition
+
+def run_svm_cv(_X, _y, random_state=42):
+    rng = np.random.RandomState(random_state)
+    indices = rng.permutation(_X.shape[0])
+    train_idx, test_idx = indices[:_X.shape[0] // 2], indices[_X.shape[0] // 2:]
+    X_train, X_test = _X[train_idx, :], _X[test_idx, :]
+    y_train, y_test = _y[train_idx], _y[test_idx]
+
+    parameters = {'kernel': ['linear'], 'C': list(np.logspace(-3, 3, 5))}
+    svr = svm.SVC()
+    clf = GridSearchCV(svr, parameters)
+    clf.fit(X_train, y_train)
+
+    return clf.score(X_test, y_test)
+
+noise_dims = np.arange(10, 1001, 25)
+test_scores = []
+
+rng = np.random.RandomState(42)
+for n_noise in noise_dims:
+    noise = rng.randn(X.shape[0], n_noise)
+    X_aug = np.concatenate((X, noise), axis=1)
+    score = run_svm_cv(X_aug, y)
+    test_scores.append(score)
+
+# Построение графика
+plt.figure(figsize=(10,6))
+plt.plot(noise_dims, test_scores, color='red')
+plt.title("Influence du nombre de variables de nuisance sur l'accuracy")
+plt.xlabel("Nombre de variables de nuisance")
+plt.ylabel("Accuracy sur l'échantillon de test")
+plt.grid(True)
+plt.show()
 
 #%%
 # Q6

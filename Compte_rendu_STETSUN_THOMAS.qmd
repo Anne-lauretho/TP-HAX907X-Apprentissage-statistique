@@ -241,8 +241,6 @@ La comparaison montre que le noyau polynomial offre une meilleure généralisati
 
 # 3. Classification de visages
 
-À l'aide du code dans "svm_script.py", nous chargeons l'ensemble de données. Notez que nous avons remplacé la ligne de code X par X (la nouvelle version de l'extraction de données).
-
 Pour notre analyse, nous avons chargé l'ensemble de données en utilisant le script "svm_script.py". 
 Nous avons apporté une petite modification à la ligne de code originale pour améliorer la compatibilité et la clarté :  
 la ligne 
@@ -253,6 +251,7 @@ a été remplacée par
 ```text
 y = np.r_[np.zeros(np.sum(idx0)), np.ones(np.sum(idx1))].astype(int)
 ```
+.
 
 Cette modification correspond à la nouvelle version de l’extraction des données.
 
@@ -279,7 +278,6 @@ n_samples, h, w, n_colors = images.shape
 # the label to predict is the id of the person
 target_names = lfw_people.target_names.tolist()
 
-####################################################################
 # Pick a pair to classify such as
 # names = ['Donald Rumsfeld', 'Colin Powell']
 names = ['Tony Blair', 'Colin Powell']
@@ -294,19 +292,13 @@ y = np.r_[np.zeros(np.sum(idx0)), np.ones(np.sum(idx1))].astype(int)
 plot_gallery(images, np.arange(12))
 plt.show()
 
-#%%
-####################################################################
 # Extract features
-
 # features using only illuminations
 X = (np.mean(images, axis=3)).reshape(n_samples, -1)
-
 # Scale features
 X -= np.mean(X, axis=0)
 X /= np.std(X, axis=0)
 
-#%%
-####################################################################
 # Split data into a half training and half test set
 
 indices = np.random.permutation(X.shape[0])
@@ -315,15 +307,20 @@ X_train, X_test = X[train_idx, :], X[test_idx, :]
 y_train, y_test = y[train_idx], y[test_idx]
 images_train, images_test = images[
     train_idx, :, :, :], images[test_idx, :, :, :]
-
 ```
+Dans ce bloc de code, nous chargeons et préparons l’ensemble de données **Labeled Faces in the Wild (LFW)**.  
+Nous commençons par télécharger les images, puis nous sélectionnons uniquement deux individus à distinguer : *Tony Blair* et *Colin Powell*.  
+
+Ensuite, nous associons à chaque image une étiquette binaire (0 pour Tony Blair et 1 pour Colin Powell), et nous visualisons un échantillon de visages afin d’illustrer le jeu de données.  
+
+Les caractéristiques utilisées correspondent aux **niveaux de luminosité moyens** des pixels de chaque image, ce qui permet de réduire la complexité de la représentation. Ces variables sont ensuite **centrées et réduites** pour normaliser les données.  
+
+Enfin, nous divisons l’ensemble en deux parties : **un jeu d’entraînement** et **un jeu de test**, chacun contenant environ la moitié des observations. Cela garantit une évaluation fiable de la performance du classificateur.
 
 ### Question 4 - Influence du paramètre de réguralisation C
 
-Pour étudier l'influence du paramètre de régularisation \(C\), nous avons utilisé un classificateur SVM à noyau linéaire. 
-Nous avons testé plusieurs valeurs de \(C\) réparties logarithmiquement entre \(10^{-5}\) et \(10^{5}\).  
-
-Le code ci-dessous illustre ce processus : 
+Pour étudier l'influence du paramètre de régularisation $C$, nous avons utilisé un classificateur SVM à noyau linéaire. 
+Nous avons testé plusieurs valeurs de $C$ réparties logarithmiquement entre $$10^{-5} \quad \text{et} \quad 10^{5}.$$ 
 
 ```{python}
 print("--- Linear kernel ---")
@@ -354,7 +351,10 @@ print("Predicting the people names on the testing set")
 t0 = time()
 ```
 
+L'étude de la performance en fonction de C permet de choisir une valeur optimale de régularisation, minimisant l'erreur et garantissant un apprentissage équilibré.
+
 Nous pouvons également visualiser l'influence du paramètre de régularisation \(C\) sur l'erreur de prédiction. 
+
 Pour cela, nous construisons un graphique similaire au précédent, mais en affichant l'erreur plutôt que le score d'apprentissage. 
 La meilleure valeur de \(C\) est indiquée par un point rouge sur le graphique.
 
@@ -385,24 +385,22 @@ plt.grid(True)
 plt.tight_layout()
 plt.show()
 
-
 print("Best C: {}".format(Cs[best_ind]))
 print("Best error: {}".format(np.min(errors)))
-print("Best accuracy: {}".format(1 - np.min(errors)))
+print("Best accuracy(score): {}".format(1 - np.min(errors)))
 t0 = time()
 ```
 
 Ces deux graphiques sont complémentaires et montrent de manière claire que :  
-- pour des valeurs de \(C\) trop faibles, le modèle est sous-appris (underfitting),  
-- pour des valeurs de \(C\) trop élevées, le modèle est sur-appris (overfitting).  
+    - pour des valeurs de \(C\) trop faibles, le modèle est *sous-appris* (underfitting),  
+    - pour des valeurs de \(C\) trop élevées, le modèle est *sur-appris* (overfitting).  
 
-Ainsi, l'étude de la performance en fonction de \(C\) permet de choisir une valeur optimale de régularisation, minimisant l'erreur et garantissant un apprentissage équilibré.
-
-Pour continuer l'analyse de l'effet du paramètre de régularisation \(C\), nous construisons également les matrices de confusion pour deux valeurs extrêmes de \(C\) : une très petite (\(C=10^{-5}\)) et une très grande (\(C=10^{5}\)).
+Pour continuer l'analyse de l'effet du paramètre de régularisation \(C\), nous construisons également les matrices de confusion pour deux valeurs extrêmes de \(C\): une très petite ($C=1e^{-5}$) et une très grande ($C=1e^{5}$).
 
 La **matrice de confusion** permet de visualiser la performance du classificateur de manière détaillée. 
 Chaque ligne correspond aux classes réelles, et chaque colonne aux classes prédites.  
-Ainsi, elle montre non seulement le taux global de bonne classification, mais aussi **quelles classes sont confondues** par le modèle.
+
+Ainsi, elle montre non seulement le taux global de bonne classification, mais aussi quelles classes sont confondues par le modèle.
 
 ```{python}
 # confusion matrix
@@ -450,10 +448,15 @@ print("\n=== Classification report (C=1e5) ===")
 print(classification_report(y_test, y_pred_large, target_names=class_names))
 ```
 
-Pour illustrer l'influence du paramètre de régularisation \(C\) sur l'apprentissage, nous avons comparé les prédictions et les coefficients du classificateur pour trois cas : la meilleure valeur de \(C\), la valeur très faible (\(C=10^{-5}\)) et la valeur très grande (\(C=10^{5}\)).
+Sur la matrice de confusion, nous pouvons observer que, pour une valeur très petite de \(C = 10^{-5}\), le modèle prédit systématiquement la classe *Colin Powell*, sans jamais identifier correctement *Tony Blair*. En revanche, pour des valeurs plus grandes de \(C\), le modèle devient plus précis, même si certaines erreurs persistent.  
 
-Pour le meilleur \(C\), le code suivant permet de prédire les étiquettes sur l'ensemble de test, d'afficher les images avec les prédictions et de visualiser les coefficients du classificateur :
+L’analyse des rapports de classification confirme cette observation :  
+- Avec \(C = 10^{-5}\), la précision et le rappel pour *Tony Blair* sont nuls, ce qui signifie que le modèle est totalement incapable de reconnaître cette classe.  
+- Avec \(C = 10^{5}\), la performance s’améliore nettement avec une précision globale de 88 %, bien que quelques erreurs subsistent pour les deux individus.  
 
+Ainsi, on peut conclure que des valeurs de \(C\) trop faibles entraînent un sous-apprentissage, tandis que des valeurs très élevées permettent au modèle de mieux capturer les différences entre les classes, mais ne suppriment pas totalement les erreurs de classification.
+
+Nous comparons la précision du modèle avec le niveau de hasard (baseline). Ainsi, nous pouvons évaluer dans quelle mesure la valeur choisie de C améliore les résultats.
 
 ```{python}
 # predict labels for the X_test images with the best classifier
@@ -466,6 +469,15 @@ print("done in %0.3fs" % (time() - t0))
 print("Chance level : %s" % max(np.mean(y), 1. - np.mean(y)))
 print("Accuracy : %s" % clf.score(X_test, y_test))
 ```
+
+Le résultat obtenu signifie que :
+    - l’entraînement du modèle a duré 0,697 seconde,
+    - le niveau de hasard est de 62,1 % (c’est-à-dire la précision atteinte si l’on prédit toujours la classe majoritaire),
+    - et la précision réelle du modèle sur les données de test est de 90,5 %, ce qui confirme l’efficacité du paramètre de régularisation choisi.»
+
+Nous avons aussi comparé les prédictions et les coefficients du classificateur pour trois cas : la meilleure valeur de \(C\), la valeur très faible (\(C=10^{-5}\)) et la valeur très grande (\(C=10^{5}\)).
+
+Pour le meilleur \(C\), le code suivant permet de prédire les étiquettes sur l'ensemble de test, d'afficher les images avec les prédictions et de visualiser les coefficients du classificateur :
 
 ```{python}
 ####################################################################
@@ -485,14 +497,14 @@ plt.show()
 ```
 
 Pour montrer l’effet du paramètre \(C\), nous avons également entraîné des modèles pour les valeurs extrêmes.
-	•	Pour $begin:math:text$C=10^{-5}$end:math:text$, l’image des coefficients est très floue, et seules les caractéristiques les plus importantes sont prises en compte, telles que la taille du front, les sourcils, la forme du nez et des lèvres.
-	•	Pour $begin:math:text$C=10^{5}$end:math:text$, le modèle est sur-appris et commence à détecter des motifs même là où il n’y en a pas. Par exemple, on observe beaucoup de points rouges sur l’arrière-plan des images, ce qui n’est pas pertinent, car les deux personnes peuvent être photographiées dans n’importe quelle pièce.
+
+    - Pour $C = 10^{-5}$, l’image des coefficients est très floue, et seules les caractéristiques les plus importantes sont prises en compte, telles que la taille du front, les sourcils, la forme du nez et des lèvres.
+    - Pour $C = 10^{-5}$, le modèle est sur-appris et commence à détecter des motifs même là où il n’y en a pas. Par exemple, on observe beaucoup de points rouges sur l’arrière-plan des images, ce qui n’est pas pertinent, car les deux personnes peuvent être photographiées dans n’importe quelle pièce.
 
 ```{python}
 # Look at the coefficients pour C=1e-5 et C=1e5
 coef_small = clf_small.coef_.ravel()
 coef_large = clf_large.coef_.ravel()
-
 
 fig, axes = plt.subplots(1, 2, figsize=(10, 5))
 
@@ -508,6 +520,80 @@ plt.show()
 Cette comparaison illustre clairement la différence entre **sous-apprentissage** et **sur-apprentissage** et montre comment le paramètre \(C\) contrôle la sensibilité du modèle aux caractéristiques des données.
 
 ### Question 5 - Ajout de variables de nuisance
+
+Dans cette partie, nous étudions l’effet de l’ajout de variables de nuisance (c’est-à-dire des variables aléatoires sans lien avec la tâche de classification). L’idée est d’augmenter artificiellement la dimension du problème tout en gardant le même nombre de points d’apprentissage. 
+
+```{python}
+def run_svm_cv(_X, _y):
+    _indices = np.random.permutation(_X.shape[0])
+    _train_idx, _test_idx = _indices[:_X.shape[0] // 2], _indices[_X.shape[0] // 2:]
+    _X_train, _X_test = _X[_train_idx, :], _X[_test_idx, :]
+    _y_train, _y_test = _y[_train_idx], _y[_test_idx]
+
+    _parameters = {'kernel': ['linear'], 'C': list(np.logspace(-3, 3, 5))}
+    _svr = svm.SVC()
+    _clf_linear = GridSearchCV(_svr, _parameters)
+    _clf_linear.fit(_X_train, _y_train)
+
+    print('Generalization score for linear kernel: %s, %s \n' %
+          (_clf_linear.score(_X_train, _y_train), _clf_linear.score(_X_test, _y_test)))
+
+print("Score sans variable de nuisance")
+run_svm_cv(X, y)
+
+print("Score avec variable de nuisance")
+n_features = X.shape[1]
+# On rajoute des variables de nuisances
+sigma = 1
+noise = sigma * np.random.randn(n_samples, 300, ) 
+#with gaussian coefficients of std sigma
+X_noisy = np.concatenate((X, noise), axis=1)
+X_noisy = X_noisy[np.random.permutation(X.shape[0])]
+np.random.shuffle(X_noisy.T)
+
+run_svm_cv(X_noisy, y)
+```
+
+Les expériences confirment cette intuition. Sans ajout de variables de nuisance, le SVM atteint une excellente performance, avec une précision d’environ 0.89 sur l’échantillon de test. En revanche, après l’ajout de 300 variables aléatoires, la performance chute drastiquement : la précision sur l’échantillon de test tombe à environ 0.48, soit proche d’un choix aléatoire. Ce contraste illustre clairement que l’ajout de variables inutiles provoque un surapprentissage du modèle et dégrade sa capacité de généralisation.
+
+Pour rendre les résultats plus clairs et reproductibles, nous fixons `random_state=42` et examinons l’effet du nombre de variables aléatoires (bruit) sur l’échantillon de test. Le graphique suivant montre cette relation.  
+
+```{python}
+def run_svm_cv(_X, _y, random_state=42):
+    rng = np.random.RandomState(random_state)
+    indices = rng.permutation(_X.shape[0])
+    train_idx, test_idx = indices[:_X.shape[0] // 2], indices[_X.shape[0] // 2:]
+    X_train, X_test = _X[train_idx, :], _X[test_idx, :]
+    y_train, y_test = _y[train_idx], _y[test_idx]
+
+    parameters = {'kernel': ['linear'], 'C': list(np.logspace(-3, 3, 5))}
+    svr = svm.SVC()
+    clf = GridSearchCV(svr, parameters)
+    clf.fit(X_train, y_train)
+
+    return clf.score(X_test, y_test)
+
+noise_dims = np.arange(10, 1001, 25)
+test_scores = []
+
+rng = np.random.RandomState(42)
+for n_noise in noise_dims:
+    noise = rng.randn(X.shape[0], n_noise)
+    X_aug = np.concatenate((X, noise), axis=1)
+    score = run_svm_cv(X_aug, y)
+    test_scores.append(score)
+
+# Построение графика
+plt.figure(figsize=(10,6))
+plt.plot(noise_dims, test_scores, color='red')
+plt.title("Influence du nombre de variables de nuisance sur l'accuracy")
+plt.xlabel("Nombre de variables de nuisance")
+plt.ylabel("Accuracy sur l'échantillon de test")
+plt.grid(True)
+plt.show()
+```
+
+On peut remarquer que la précision reste globalement élevée, ce qui indique que le modèle continue à exploiter les informations pertinentes des caractéristiques originales. Néanmoins, comme prévu, on observe une diminution progressive de la performance à mesure que le nombre de variables de nuisance augmente, illustrant l’effet négatif de l’ajout de dimensions non informatives.
 
 ### Question 6 - PCA
 

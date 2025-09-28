@@ -483,7 +483,7 @@ plt.show()
 import time as tm
 print("Score apres reduction de dimension")
 
-n_components = 100  # jouer avec ce parametre
+n_components = 20  # jouer avec ce parametre
 pca = PCA(n_components=n_components).fit(X_noisy)
 X_pca = pca.transform(X_noisy)
 
@@ -494,7 +494,56 @@ elapsed = tm.time() - t0
 
 print(f"Nombre de composantes PCA: {n_components}")
 print(f"Temps de calcul: {elapsed:.3f} secondes")
-
-
-
 # %%
+#un it if you want, it took me 5h no joke, im not even sure its the thing he want us to do  
+#Hunger games
+
+import time as tm
+import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
+
+# all the numbers to check
+components_list = list(range(2, 201, 10))
+
+accuracies = []  # for test score
+times = []       # for time
+print("Score apres reduction de dimension (svd_solver='randomized')\n")
+
+for n_components in components_list:
+    print(f"Nombre de composantes PCA: {n_components}")
+    
+    #PCA с randomized solver - what prof asks
+    pca = PCA(n_components=n_components, svd_solver='randomized', random_state=42)
+    X_pca = pca.fit_transform(X_noisy)
+    
+    t0 = tm.time()
+    # hoping that, что run_svm_cv giving back test_score
+    test_score = run_svm_cv(X_pca, y)  
+    elapsed = tm.time() - t0
+    
+    accuracies.append(test_score)  # save accuracy
+    times.append(elapsed)          # save time
+    
+    print(f"Test score: {test_score:.3f}")
+    print(f"Temps de calcul: {elapsed:.3f} secondes\n")
+
+#graph
+fig, ax1 = plt.subplots(figsize=(8,5))
+
+# Accuracy
+color = 'tab:blue'
+ax1.set_xlabel('Nombre de composantes PCA')
+ax1.set_ylabel('Accuracy', color=color)
+ax1.plot(components_list, accuracies, marker='o', color=color, label='Accuracy')
+ax1.tick_params(axis='y', labelcolor=color)
+
+# Temps
+ax2 = ax1.twinx()
+color = 'tab:red'
+ax2.set_ylabel('Temps (s)', color=color)
+ax2.plot(components_list, times, marker='s', linestyle='--', color=color, label='Temps')
+ax2.tick_params(axis='y', labelcolor=color)
+ax2.set_yscale('log')  # logarithmic time scale
+
+plt.title("Influence du nombre de composantes PCA sur l'accuracy et le temps")
+plt.show()

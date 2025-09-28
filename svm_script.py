@@ -333,10 +333,8 @@ disp_large = ConfusionMatrixDisplay(confusion_matrix=cm_large, display_labels=cl
 
 # rows
 fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-
 # 0 = Tony Blair, 1 = Colin Powell)
 class_names = ['Tony Blair', 'Colin Powell']
-
 
 disp_small = ConfusionMatrixDisplay(confusion_matrix=cm_small,
                                     display_labels=class_names)
@@ -347,13 +345,15 @@ disp_large = ConfusionMatrixDisplay(confusion_matrix=cm_large,
 disp_large.plot(ax=axes[1], cmap="Blues", xticks_rotation='vertical', colorbar=False)
 axes[1].set_title("Confusion matrix (C=1e5)")
 
-
 plt.tight_layout()
 plt.show()
 
 #%% la meme chose mais en chifre
-from sklearn.metrics import classification_report
-print(classification_report(y_test, y_pred, target_names=names))
+print("=== Classification report (C=1e-5) ===")
+print(classification_report(y_test, y_pred_small, target_names=class_names))
+
+print("\n=== Classification report (C=1e5) ===")
+print(classification_report(y_test, y_pred_large, target_names=class_names))
 
 #%%
 # predict labels for the X_test images with the best classifier
@@ -435,11 +435,30 @@ run_svm_cv(X_noisy, y)
 
 #%%
 # Q6
+
+# prof code
+#print("Score apres reduction de dimension")
+#n_components = 100  # jouer avec ce parametre
+#pca = PCA(n_components=n_components).fit(X_noisy)
+#X_pca = pca.transform(X_noisy)
+#run_svm_cv(X_pca, y)
+
+#our code
+import time as tm
 print("Score apres reduction de dimension")
 
-n_components = 20  # jouer avec ce parametre
+n_components = 100  # jouer avec ce parametre
 pca = PCA(n_components=n_components).fit(X_noisy)
 X_pca = pca.transform(X_noisy)
 
+# for calculate time
+t0 = tm.time()
 run_svm_cv(X_pca, y)
+elapsed = tm.time() - t0
+
+print(f"Nombre de composantes PCA: {n_components}")
+print(f"Temps de calcul: {elapsed:.3f} secondes")
+
+
+
 # %%

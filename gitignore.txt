@@ -7,7 +7,7 @@ seaborn
 
 
 # Ignore virtual environment folder
-venv/
+.venv/
 
-# Ignore requirements file
-requirements.txt
+#ignore HTMLgenerated folder
+Compte_rendu_STETSUN_THOMAS_files/

@@ -27,3 +27,50 @@ Le TP couvre :
     │    ├── Compte_rendu_STETSUN_THOMAS.qmd
     │    └── README.md
 ```
+
+## Installation des dépendances et génération du rapport
+
+Pour exécuter ce projet et générer le rapport HTML à partir du fichier `.qmd`, suivez les étapes ci-dessous :
+
+1. **Créer un environnement virtuel** (recommandé) :
+
+```bash
+python -m venv venv
+```
+
+2. **Activer l’environnement virtuel** :
+
+- Sur Windows :
+```bash
+venv\Scripts\activate
+```
+
+- Sur Linux / Mac :
+```bash
+source venv/bin/activate
+```
+
+3. **Installer les dépendances** :
+```bash
+pip install -r requirements.txt
+```
+
+4. **IGénérer le rapport HTML à partir du fichier .qmd** :
+
+Pour générer le rapport HTML à partir des fichiers `.qmd`, il est nécessaire d'installer **Quarto** sur votre ordinateur. Suivez les étapes ci-dessous :
+
+- Rendez-vous sur [le site officiel de Quarto](https://quarto.org/docs/get-started/).
+- Téléchargez la version correspondant à votre système d'exploitation.
+- Installez Quarto en suivant les instructions de l'installateur.
+- Vérifiez l'installation en ouvrant un terminal ou l’invite de commande et en tapant :
+```bash
+quarto --version
+```
+- Exécuter:
+```bash
+quarto render Compte_rendu_STETSUN_THOMAS.qmd --to html
+```
+
+Le fichier HTML généré contiendra toutes les parties de code Python exécutables ainsi que les graphiques et analyses.
+Veuillez faire preuve de patience : certaines parties du code peuvent prendre plus de temps à s'exécuter que d'autres (comme pas example le cell 4, ou le cell __).  
+La conversion complète du rapport peut donc nécessiter quelques moments selon la complexité des calculs.

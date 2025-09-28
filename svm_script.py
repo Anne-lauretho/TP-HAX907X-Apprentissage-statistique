@@ -495,7 +495,7 @@ elapsed = tm.time() - t0
 print(f"Nombre de composantes PCA: {n_components}")
 print(f"Temps de calcul: {elapsed:.3f} secondes")
 # %%
-#un it if you want, it took me 5h no joke, im not even sure its the thing he want us to do  
+#un it if you want, it took me 5h+ no joke, im not even sure its the thing he want us to do  
 #Hunger games
 
 import time as tm

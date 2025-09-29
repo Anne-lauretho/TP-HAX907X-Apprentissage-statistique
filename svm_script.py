@@ -501,15 +501,39 @@ print(f"Temps de calcul: {elapsed:.3f} secondes")
 import time as tm
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
+import csv
+import os
 
 # all the numbers to check
 components_list = list(range(2, 201, 10))
+
+# pour autosave
+filename = "pca_results_autosave.csv"
+if os.path.exists(filename):
+    # upload exister results
+    components_done, accuracies, times = [], [], []
+    with open(filename, "r") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            components_done.append(int(row["n_components"]))
+            accuracies.append(float(row["accuracy"]))
+            times.append(float(row["time_seconds"]))
+    print(f"Загружено {len(components_done)} уже обработанных компонентов")
+else:
+    components_done, accuracies, times = [], [], []
+
+print("Score apres reduction de dimension (svd_solver='randomized')\n")
+
 
 accuracies = []  # for test score
 times = []       # for time
 print("Score apres reduction de dimension (svd_solver='randomized')\n")
 
 for n_components in components_list:
+# skip what already have
+    if n_components in components_done:
+        continue
+
     print(f"Nombre de composantes PCA: {n_components}")
     
     #PCA с randomized solver - what prof asks
@@ -521,11 +545,21 @@ for n_components in components_list:
     test_score = run_svm_cv(X_pca, y)  
     elapsed = tm.time() - t0
     
+    components_done.append(n_components)
     accuracies.append(test_score)  # save accuracy
     times.append(elapsed)          # save time
     
     print(f"Test score: {test_score:.3f}")
     print(f"Temps de calcul: {elapsed:.3f} secondes\n")
+
+     # autosave
+    with open(filename, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["n_components", "accuracy", "time_seconds"])
+        for n, acc, t in zip(components_done, accuracies, times):
+            writer.writerow([n, acc, t])
+    print(f"Промежуточные результаты сохранены в {filename}\n")
+
 
 #graph
 fig, ax1 = plt.subplots(figsize=(8,5))

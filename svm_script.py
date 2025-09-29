@@ -211,7 +211,7 @@ images = np.r_[images[idx0], images[idx1]]
 n_samples = images.shape[0]
 y = np.r_[np.zeros(np.sum(idx0)), np.ones(np.sum(idx1))].astype(int)
 
-#code de prof (version pas bon)
+#teacher's code (bad version)
 #y = np.r_[np.zeros(np.sum(idx0)), np.ones(np.sum(idx1))].astype(np.int)
 
 # plot a sample set of the data
@@ -281,14 +281,14 @@ t0 = time()
 
 
 #%%
-# calculons l`erreur
+# let's calculate the error
 errors = []
 for C in Cs:
     clf = SVC(kernel="linear", C=C)
     clf.fit(X_train, y_train)
     errors.append(1 - clf.score(X_test, y_test))
 
-# cherche min erreur
+# look for the min of the error
 best_ind = np.argmin(errors)
 best_C = Cs[best_ind]
 best_error = errors[best_ind]
@@ -296,7 +296,7 @@ best_error = errors[best_ind]
 plt.figure()
 plt.plot(Cs, errors, marker="o")
 
-# plot erreue
+# plot error
 plt.scatter(best_C, best_error, color="red", s=100, zorder=5)
 
 plt.xscale("log")
@@ -315,7 +315,7 @@ t0 = time()
 
 #%%
 # confusion matrix
-#small C
+# small C
 clf_small = SVC(kernel="linear", C=1e-5)
 clf_small.fit(X_train, y_train)
 y_pred_small = clf_small.predict(X_test)
@@ -348,7 +348,7 @@ axes[1].set_title("Confusion matrix (C=1e5)")
 plt.tight_layout()
 plt.show()
 
-#%% la meme chose mais en chifre
+#%% the same thing but in numbers
 print("=== Classification report (C=1e-5) ===")
 print(classification_report(y_test, y_pred_small, target_names=class_names))
 
@@ -423,10 +423,10 @@ run_svm_cv(X, y)
 
 print("Score avec variable de nuisance")
 n_features = X.shape[1]
-# On rajoute des variables de nuisances
+# We add nuisance variables
 sigma = 1
 noise = sigma * np.random.randn(n_samples, 300, ) 
-#with gaussian coefficients of std sigma
+# with gaussian coefficients of std sigma
 X_noisy = np.concatenate((X, noise), axis=1)
 X_noisy = X_noisy[np.random.permutation(X.shape[0])]
 np.random.shuffle(X_noisy.T)
@@ -460,7 +460,7 @@ for n_noise in noise_dims:
     score = run_svm_cv(X_aug, y)
     test_scores.append(score)
 
-# Построение графика
+# Plotting a graph
 plt.figure(figsize=(10,6))
 plt.plot(noise_dims, test_scores, color='red')
 plt.title("Influence du nombre de variables de nuisance sur l'accuracy")
@@ -479,11 +479,11 @@ plt.show()
 #X_pca = pca.transform(X_noisy)
 #run_svm_cv(X_pca, y)
 
-#our code
+# our code
 import time as tm
 print("Score apres reduction de dimension")
 
-n_components = 20  # jouer avec ce parametre
+n_components = 20  # play with this setting
 pca = PCA(n_components=n_components).fit(X_noisy)
 X_pca = pca.transform(X_noisy)
 
@@ -507,7 +507,7 @@ import os
 # all the numbers to check
 components_list = list(range(2, 201, 10))
 
-# pour autosave
+# for autosave
 filename = "pca_results_autosave.csv"
 if os.path.exists(filename):
     # upload exister results
@@ -541,7 +541,7 @@ for n_components in components_list:
     X_pca = pca.fit_transform(X_noisy)
     
     t0 = tm.time()
-    # hoping that, что run_svm_cv giving back test_score
+    # hoping that, run_svm_cv giving back test_score
     test_score = run_svm_cv(X_pca, y)  
     elapsed = tm.time() - t0
     
@@ -558,17 +558,17 @@ for n_components in components_list:
         writer.writerow(["n_components", "accuracy", "time_seconds"])
         for n, acc, t in zip(components_done, accuracies, times):
             writer.writerow([n, acc, t])
-    print(f"Промежуточные результаты сохранены в {filename}\n")
+    print(f"Les résultats intermédiaires sont enregistrés dans {filename}\n")
 
 
-#graph
+# graph
 fig, ax1 = plt.subplots(figsize=(8,5))
 
-# Accuracy
+# Précision
 color = 'tab:blue'
 ax1.set_xlabel('Nombre de composantes PCA')
-ax1.set_ylabel('Accuracy', color=color)
-ax1.plot(components_list, accuracies, marker='o', color=color, label='Accuracy')
+ax1.set_ylabel('Précision', color=color)
+ax1.plot(components_list, accuracies, marker='o', color=color, label='Précision')
 ax1.tick_params(axis='y', labelcolor=color)
 
 # Temps
@@ -579,5 +579,5 @@ ax2.plot(components_list, times, marker='s', linestyle='--', color=color, label=
 ax2.tick_params(axis='y', labelcolor=color)
 ax2.set_yscale('log')  # logarithmic time scale
 
-plt.title("Influence du nombre de composantes PCA sur l'accuracy et le temps")
+plt.title("Influence du nombre de composantes PCA sur la précision et le temps")
 plt.show()

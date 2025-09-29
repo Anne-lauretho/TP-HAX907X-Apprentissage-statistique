@@ -1,0 +1,26 @@
+# --- Environnement ---
+.conda/
+
+.env
+.venv
+env/
+venv/
+
+# --- Fichiers Python compilés ---
+__pycache__/
+*.pyc
+*.pyo
+
+# --- Notebooks Jupyter ---
+.ipynb_checkpoints/
+
+# --- Sorties générées automatiquement ---
+*_files/
+
+# --- Fichiers R temporaires ---
+.Rhistory
+.RData
+
+# --- Fichiers système inutiles ---
+.DS_Store
+Thumbs.db

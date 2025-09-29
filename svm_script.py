@@ -202,8 +202,8 @@ target_names = lfw_people.target_names.tolist()
 
 ####################################################################
 # Pick a pair to classify such as
-names = ['Tony Blair', 'Colin Powell']
 # names = ['Donald Rumsfeld', 'Colin Powell']
+names = ['Donald Rumsfeld', 'Colin Powell']
 
 idx0 = (lfw_people.target == target_names.index(names[0]))
 idx1 = (lfw_people.target == target_names.index(names[1]))
@@ -333,8 +333,8 @@ disp_large = ConfusionMatrixDisplay(confusion_matrix=cm_large, display_labels=cl
 
 # rows
 fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-# 0 = Tony Blair, 1 = Colin Powell)
-class_names = ['Tony Blair', 'Colin Powell']
+# 0 = Donald Rumsfeld, 1 = Colin Powell)
+class_names = ['Donald Rumsfeld', 'Colin Powell']
 
 disp_small = ConfusionMatrixDisplay(confusion_matrix=cm_small,
                                     display_labels=class_names)
@@ -518,7 +518,7 @@ if os.path.exists(filename):
             components_done.append(int(row["n_components"]))
             accuracies.append(float(row["accuracy"]))
             times.append(float(row["time_seconds"]))
-    print(f"Загружено {len(components_done)} уже обработанных компонентов")
+    print(f"Composants {len(components_done)} chargés déjà traités")
 else:
     components_done, accuracies, times = [], [], []
 

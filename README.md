@@ -1,6 +1,6 @@
 # TP-HAX907X-Apprentissage-statistique
 
-Bienvenue dans notre dépot du TP "Support Vector Machine" pour le cours HAX815X de l'année universitaire 2025-2026.
+Bienvenue dans notre dépôt pour le TP "Support Vector Machine" pour le cours HAX815X de l'année universitaire 2025-2026.
 Les auteurs sont :
 
 - STETSUN Kateryna (kateryna.stetsun@etu.umontpellier.fr)
@@ -16,17 +16,8 @@ Le TP couvre :
 - Étude de l’influence des paramètres (C, noyau, nuisance, PCA).
 
 ## Structure
-- Compte_rendu_STETSUN_THOMAS.qmd : Le fichier Quarto contenant le compte-rendu du TP.
-
-## Explication pour compiler le fichier .qmd
-....
-
-```TP_SVM
-    ├── TP-HAX907X-Apprentissage-statistique/
-    │    ├── Licence
-    │    ├── Compte_rendu_STETSUN_THOMAS.qmd
-    │    └── README.md
-```
+- Compte_rendu_STETSUN_THOMAS.qmd : le fichier Quarto contenant le compte-rendu du TP.
+- À compléter. 
 
 ## Installation des dépendances et génération du rapport
 
@@ -55,7 +46,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-4. **IGénérer le rapport HTML à partir du fichier .qmd** :
+4. **Générer le rapport HTML à partir du fichier .qmd** :
 
 Pour générer le rapport HTML à partir des fichiers `.qmd`, il est nécessaire d'installer **Quarto** sur votre ordinateur. Suivez les étapes ci-dessous :
 
@@ -72,5 +63,13 @@ quarto render Compte_rendu_STETSUN_THOMAS.qmd --to html
 ```
 
 Le fichier HTML généré contiendra toutes les parties de code Python exécutables ainsi que les graphiques et analyses.
-Veuillez faire preuve de patience : certaines parties du code peuvent prendre plus de temps à s'exécuter que d'autres (comme pas example le cell 4, ou le cell __).  
-La conversion complète du rapport peut donc nécessiter quelques moments selon la complexité des calculs.
+Veuillez faire preuve de patience : certaines parties du code peuvent prendre plus de temps à s'exécuter que d'autres (comme par exemple la cellule 4). La conversion complète du rapport peut donc nécessiter quelques moments selon la complexité des calculs.
+
+Voici un schéma de l'architecture de notre projet, détaillant l'emplacement de chaque dossier et fichier : (À modifier)
+
+```TP_SVM
+    ├── TP-HAX907X-Apprentissage-statistique/
+    │    ├── Licence
+    │    ├── Compte_rendu_STETSUN_THOMAS.qmd
+    │    └── README.md
+```

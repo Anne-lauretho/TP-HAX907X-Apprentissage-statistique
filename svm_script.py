@@ -14,6 +14,8 @@ from sklearn.decomposition import PCA
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.metrics import classification_report
 from time import time
+import csv
+import os
 
 scaler = StandardScaler()
 
@@ -131,7 +133,7 @@ clf_poly = GridSearchCV(SVC(), parameters, cv=5)
 clf_poly.fit(X_train, y_train)
 
 
-print(clf_grid.best_params_)
+print(clf_grid.bestparams)
 print('Generalization score for polynomial kernel: %s, %s' %
       (clf_poly.score(X_train, y_train),
        clf_poly.score(X_test, y_test)))
@@ -495,20 +497,16 @@ elapsed = tm.time() - t0
 print(f"Nombre de composantes PCA: {n_components}")
 print(f"Temps de calcul: {elapsed:.3f} secondes")
 # %%
-#un it if you want, it took me 5h+ no joke, im not even sure its the thing he want us to do  
+#run it if you want, it took me 5h+ no joke, im not even sure its the thing he want us to do  
 #Hunger games
 
 import time as tm
-import matplotlib.pyplot as plt
-from sklearn.decomposition import PCA
-import csv
-import os
 
 # all the numbers to check
 components_list = list(range(2, 201, 10))
 
 # for autosave
-filename = "pca_results_autosave.csv"
+filename = "pca_results_autosave_1.csv"
 if os.path.exists(filename):
     # upload exister results
     components_done, accuracies, times = [], [], []
@@ -581,3 +579,4 @@ ax2.set_yscale('log')  # logarithmic time scale
 
 plt.title("Influence du nombre de composantes PCA sur la précision et le temps")
 plt.show()
+# %%

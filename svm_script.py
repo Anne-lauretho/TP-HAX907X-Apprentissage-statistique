@@ -133,7 +133,7 @@ clf_poly = GridSearchCV(SVC(), parameters, cv=5)
 clf_poly.fit(X_train, y_train)
 
 
-print(clf_grid.bestparams)
+print(clf_poly.best_params_)
 print('Generalization score for polynomial kernel: %s, %s' %
       (clf_poly.score(X_train, y_train),
        clf_poly.score(X_test, y_test)))

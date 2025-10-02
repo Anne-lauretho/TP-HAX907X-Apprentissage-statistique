@@ -39,13 +39,13 @@ document.getElementById("today").textContent = new Date().toLocaleDateString("fr
 
 Les machines à vecteurs de support (SVM), introduites par Vapnik dans les années 1990, sont des méthodes de classification supervisée largement utilisées. Leur principe repose sur la recherche d'un hyperplan séparateur maximisant la marge entre deux classes.
 
-Lorsque les données ne sont pas linéairement séparables, on peut utiliser le kernel trick, qui permet de projeter implicitement les données dans un espace de dimension supérieure grâce à des noyaux tels que le linéaire, polynomial ou gaussien RBF.
+Lorsque les données ne sont pas linéairement séparables, on peut utiliser le kernel trick, qui permet de projeter implicitement les données dans un espace de dimension supérieure grâce à des noyaux tels que le linéaire, le polynomial ou le gaussien RBF.
 
 Un paramètre clé, noté C, contrôle le compromis entre la largeur de la marge et les erreurs de classification.
 
 L'objectif de ce TP est de mettre en pratique ces concepts à l'aide de la bibliothèque scikit-learn, sur des jeux de données simulés et réels.
 
-# Mise en oeuvre
+# Mise en œuvre
 
 ## 1. Jeu de données jouet (deux gaussiennes)
 
@@ -163,7 +163,7 @@ Les deux figures illustrent la frontière de décision d'un SVM linéaire appliq
 
 ## 2. Jeu de données iris
 
-### Question 1 : Noyau linéaire
+### Question 1 : noyau linéaire
 
 ```{python}
 # Chargement et préparation des données Iris 
@@ -214,9 +214,9 @@ plt.draw()
 Avec le jeu de données "iris" (classes 1 et 2, deux premières variables), l'utilisation d'un SVM à noyau linéaire donne une performance d'environ $0.68$ sur l'échantillon test. Après optimisation du paramètre de régularisation C via une recherche sur grille (GridSearchCV), le score de généralisation s'élève à environ $0.71$.
 
 Le premier graphique représente les données du jeu Iris. Les points sont codés par couleur et forme selon leur classe, révélant un chevauchement partiel entre les deux groupes.
-Le second graphique illustre la frontière de décision d'un SVM linéaire optimisé. Les zones colorées indiquent les prédictions du modèle, et la séparation diagonale montre la capacité du classifieur à distinguer les deux classes dans cet espace réduit
+Le second graphique illustre la frontière de décision d'un SVM linéaire optimisé. Les zones colorées indiquent les prédictions du modèle, et la séparation diagonale montre la capacité du classifieur à distinguer les deux classes dans cet espace réduit.
 
-### Question 2 : Noyau polynomial 
+### Question 2 : noyau polynomial 
 
 ```{python}
 # Définition des hyperparamètres pour le noyau polynomial
@@ -317,7 +317,7 @@ Pour illustrer la diversité des visages et la qualité des images utilisées, u
 
 Afin de faciliter l'apprentissage du classificateur, ces caractéristiques sont centrées et réduites, garantissant que chaque variable a une moyenne nulle et un écart-type égal à un. Enfin, l'ensemble de données est divisé de manière aléatoire en deux parties : un jeu d'entraînement et un jeu de test, contenant chacun environ la moitié des observations. Cette séparation permet d'évaluer de manière fiable les performances du modèle sur des images jamais vues pendant l'entraînement.
 
-### Question 4 - Influence du paramètre de régularisation C
+### Question 4 : influence du paramètre de régularisation C
 
 Pour étudier l'influence du paramètre de régularisation C, nous avons utilisé un classificateur SVM à noyau linéaire. Ce paramètre contrôle l'équilibre entre la maximisation de la marge et la pénalisation des erreurs de classification.
 
@@ -465,7 +465,7 @@ Les rapports de classification confirment que :
 
 Il est important de noter que l'accuracy de $70\%$$ pour $C = 10^{-5}$ ne reflète pas la véritable performance du modèle. Ce résultat est dû au déséquilibre des classes : comme il y a davantage d'images de *Colin Powell*, le classificateur prédit systématiquement cette classe, atteignant ainsi artificiellement $70\%$ de bonnes réponses. Cette mesure ne traduit donc pas la capacité réelle de reconnaissance, mais uniquement un biais lié à la distribution des données.
 
-Pour évaluer correctement la performance du modèle il est nécessaire d'utiliser des métriques telles que la précision (*precision*), le rappel (*recall*) et le *f1-score*. Pour $C = 10^{5}$, ces métriques s'améliorent pour les deux classes (*Donald Rumsfeld* : precision $= 0.82$, recall $= 0.76$ ; *Colin Powell* : precision $= 0.90$, recall $= 0.93$), indiquant une amélioration réelle de la qualité des prédictions.
+Pour évaluer correctement la performance du modèle, il est nécessaire d'utiliser des métriques telles que la précision (*precision*), le rappel (*recall*) et le *f1-score*. Pour $C = 10^{5}$, ces métriques s'améliorent pour les deux classes (*Donald Rumsfeld* : precision $= 0.82$, recall $= 0.76$ ; *Colin Powell* : precision $= 0.90$, recall $= 0.93$), indiquant une amélioration réelle de la qualité des prédictions.
 
 Nous comparons la précision du modèle avec le niveau de hasard (*baseline*), afin d'évaluer dans quelle mesure le choix de C améliore réellement les performances.
 
@@ -527,7 +527,7 @@ Pour $C = 10^{5}$, le modèle devient beaucoup plus sensible et fragmente toutes
 
 Cette comparaison illustre clairement la différence entre sous-apprentissage et surapprentissage et montre comment le paramètre C contrôle la sensibilité du modèle aux caractéristiques des données.
 
-### Question 5 - Ajout de variables de nuisance
+### Question 5 : ajout de variables de nuisance
 
 Dans cette partie, nous étudions l'effet de l'ajout de variables de nuisance, c'est-à-dire des variables sans rapport avec la tâche de classification. Nous commençons par définir une fonction pour entraîner un SVM à noyau linéaire en validation croisée.
 
@@ -566,7 +566,7 @@ run_svm_cv(X_noisy, y)
 
 Les résultats nous montrent que sans variables de nuisance, le SVM obtient un score d'environ $0.92$ sur l'échantillon de test. En revanche, après l'ajout de $300$ variables aléatoires, le score chute à environ $0.55$, soit proche du niveau du hasard. Ce contraste illustre bien que l'ajout de dimensions inutiles entraine un surapprentissage et dégrade sa capacité de généralisation.
 
-Pour rendre l'analyse plus robuste, nous fixons un `random_state=42` et faison varier le nombre de variables de nuisance.
+Pour rendre l'analyse plus robuste, nous fixons un `random_state=42` et faisons varier le nombre de variables de nuisance.
 
 ```{python}
 # Fonction de validation croisée avec SVM linéaire
@@ -611,17 +611,18 @@ La comparaison sans bruit et avec $300$ variables de nuisance montre clairement 
 
 Cependant, la tendance générale du graphique n'indique pas que l'augmentation du nombre de variables de nuisance jusqu'à $1000$ entraînera une baisse supplémentaire de la précision. Pour un grand nombre de variables de bruit indépendantes, le SVM linéaire en lisse l'influence et la performance se stabilise à un niveau proche de celui d'origine.
 
-### Question 6 - PCA
+### Question 6 : PCA
 
 Pour étudier l'influence du paramètre C sur la précision des résultats, nous avons utilisé la partie de code suivante qui est disponible dans `svm_script.py`.
 
 L'exécution complète du script peut être longue, car pour chaque nombre de composantes PCA, plusieurs opérations sont effectuées :
 
-1. transformation du jeu de données via PCA avec `svd_solver='randomized'` ;  
-2. entraînement et test d'un SVM avec validation croisée sur la moitié des données ; 
-3. sauvegarde des résultats dans un fichier pour analyse ultérieure.  
+1. Transformation du jeu de données via PCA avec `svd_solver='randomized'` ;  
+2. Entraînement et test d'un SVM avec validation croisée sur la moitié des données ; 
 
-L'utilisation du paramètre `svd_solver='randomized'` permet d'accélérer le calcul de la PCA sur de grands ensembles de données tout en conservant une approximation précise des composantes principales. Pour l'ensemble des composantes allant de $20$ à $200$ (par pas de $10$), le calcul peut ainsi durer plusieurs heures.   
+3. Sauvegarde des résultats dans un fichier pour analyse ultérieure.  
+
+L'utilisation du paramètre `svd_solver='randomized'` permet d'accélérer le calcul de la PCA sur de grands ensembles de données tout en conservant une approximation précise des composantes principales. Pour l'ensemble des composantes allant de $20$ à $200$ (par pas de $10$), le calcul peut ainsi durer plusieurs heures.  
 
 ```{.python .sourceCode}
 # Comparaison du temps et de la précision pour les composants de 2 à 200
@@ -721,19 +722,19 @@ Sur les graphiques, l'axe X représente le nombre de composantes PCA, l'axe Y (g
 
 La fonction `sklearn.decomposition.PCA(svd_solver='randomized')` utilisée introduit une légère variabilité à chaque exécution en raison de l'initialisation aléatoire, ce qui peut rendre la qualité de la classification instable.  
 
-Le temps de traitement reste cependant globalement stable. Il atteint un pic entre $32$ et $52$ composantes, car pour un petit nombre de composantes, le PCA conserve le maximum de variance des caractéristiques originales. À ce stade, le SVM doit traiter encore une quantité significative d'information utile pour construire l'hyperplan, ce qui augmente la charge de calcul. Ensuite, lorsque le nombre de composantes augmente, le PCA répartit les caractéristiques significatives sur davantage de dimensions, réduisant la charge pour le SVM et entraînant une diminution du temps de traitement.  
+Le temps de traitement reste cependant globalement stable. Il atteint un pic entre $32$ et $52$ composantes, car pour un petit nombre de composantes, le PCA conserve le maximum de variance des caractéristiques originales. À ce stade, le SVM doit traiter encore une quantité significative d'informations utiles pour construire l'hyperplan, ce qui augmente la charge de calcul. Ensuite, lorsque le nombre de composantes augmente, le PCA répartit les caractéristiques significatives sur davantage de dimensions, réduisant la charge pour le SVM et entraînant une diminution du temps de traitement.  
 
 <img src="images/output_q6_0_old.png" style="display:inline-block; width:100%;">
 
 On peut également remarquer que cette tendance se maintient lorsqu'on entraîne le modèle sur un autre jeu de données, par exemple pour la comparaison de deux autres personnes : *Tony Blair* et *Colin Powell*, où l'on observe une dépendance similaire entre le nombre de composantes PCA et la précision ainsi que le temps de calcul.  
 
-### Question 7 - Biais dans le prétaitement
+### Question 7 : biais dans le prétraitement
 
 Dans le prétraitement initial, la normalisation était appliquée avant la séparation des échantillons d'entraînement et de test. La moyenne et l'écart-type ont donc été calculés sur l'ensemble du jeu de données, provoquant une fuite d’information de l'échantillon de test vers l'entraînement. Ce biais de prétraitement peut conduire à une estimation trop optimiste de la précision du modèle.
 
-Par curiosité nous avons voulu vérifier l'effet de cette correction, nous avons séparé les données en ensembles d'entraînement et de test avant normalisation. La moyenne et l'écart-type ont été calculées uniquement sur l'ensemble d'entraînement, puis utilisées pour normaliser l'échantillon de test. 
+Par curiosité, nous avons voulu vérifier l'effet de cette correction, nous avons séparé les données en ensembles d'entraînement et de test avant normalisation. La moyenne et l'écart-type ont été calculés uniquement sur l'ensemble d'entraînement, puis utilisés pour normaliser l'échantillon de test. 
 
-Pour le rapport, nous vous présentons uniquement les résultats générés avec cette version corrigée, car l'exécution complète du code est longue. Nous avons juste changer la partie suivante et refais tourner pour les questions 4, 5 et 6.
+Pour le rapport, nous vous présentons uniquement les résultats générés avec cette version corrigée, car l'exécution complète du code est longue. Nous avons juste changé la partie suivante et refait tourner pour les questions 4, 5 et 6.
 
 ```{python .sourceCode}
 lfw_people = fetch_lfw_people(min_faces_per_person=70, resize=0.4,
@@ -807,7 +808,7 @@ Nous pouvons remarquer que les deux images sont devenues plus fragmentées, ce q
 
 <img src="images/output_q5_apres_q7.png" style="display:inline-block">
 
-Sans variables de nuisance, le SVM atteint une précision d'environ $0.89$. Après l'ajout de $300$ variables aléatoires, la précision chute à $0.53$, proche du niveau du hasard. Cette diminution s'explique par la correction de l'ordre des opérations : séparation des ensembles avant normalisation, empêchant le modèle d'utiliser des informations du test pour le scaling
+Sans variables de nuisance, le SVM atteint une précision d'environ $0.89$. Après l'ajout de $300$ variables aléatoires, la précision chute à $0.53$, proche du niveau du hasard. Cette diminution s'explique par la correction de l'ordre des opérations : séparation des ensembles avant normalisation, empêchant le modèle d'utiliser des informations du test pour le scaling.
 
 #### Question 6
 

@@ -1,28 +1,27 @@
 # TP-HAX907X-Apprentissage-statistique
 
-Bienvenue dans notre dépôt pour le TP "Support Vector Machine" pour le cours HAX815X de l'année universitaire 2025-2026
+Bienvenue dans notre dépôt pour le TP "Support Vector Machine" pour le cours HAX815X de l'année universitaire 2025-2026.
 
 ## Auteurs
-- STETSUN Kateryna (kateryna.stetsun@etu.umontpellier.fr)
-- THOMAS Anne-Laure (anne-laure.thomas@etu.umontpellier.fr)
+- STETSUN Kateryna (kateryna.stetsun@etu.umontpellier.fr).
+- THOMAS Anne-Laure (anne-laure.thomas@etu.umontpellier.fr).
 
 ## Description
 Ce dépôt contient le compte-rendu et les scripts Python pour le TP "Support Vector Machine".  
 Le TP couvre :
-- Classification sur un dataset jouet : deux gaussiennes
-- Classification sur le dataset Iris
-- Classification de visages avec la base LFW (Labeled Faces in the Wild)
-- Étude de l'influence des paramètres : C, noyau, variables de nuisance, PCA
+- Classification sur un dataset jouet : deux gaussiennes.
+- Classification sur le dataset Iris.
+- Classification de visages avec la base LFW (Labeled Faces in the Wild).
+- Étude de l'influence des paramètres : C, noyau, variables de nuisance, PCA.
 
 ## Structure du projet
-- `Compte_rendu_STETSUN_THOMAS.html` : rapport final en HTML
-- `Compte_rendu_STETSUN_THOMAS.qmd` : fichier Quarto du compte-rendu
-- `svm_script.py` : script principal pour le SVM
-- `svm_source.py` : fonctions utilitaires
-- `csv_files/` : fichiers CSV de données
-- `images/` : figures et images générées
-- `requirements.txt` : dépendances Python
-- `README.md`, `LICENSE`, `.gitignore` : fichiers standards
+- `Compte_rendu_STETSUN_THOMAS.html` : rapport final en HTML.
+- `Compte_rendu_STETSUN_THOMAS.qmd` : fichier Quarto du compte-rendu.
+-  Un dossier `script_python` contenant : le script principal pour le SVM `svm_script.py` et  les fonctions utilitaires `svm_source.py `.
+- `csv_files/` : fichiers CSV de données.
+- `images/` : figures et images générées.
+- `requirements.txt` : dépendances Python.
+- `README.md`, `LICENSE`, `.gitignore` : fichiers standards.
 
 ## Installation des dépendances et génération du rapport
 
@@ -62,7 +61,7 @@ Pour générer le rapport HTML à partir des fichiers `.qmd`, il est nécessaire
 ```bash
 quarto --version
 ```
-- Exécuter:
+- Exécuter :
 ```bash
 quarto render Compte_rendu_STETSUN_THOMAS.qmd --to html
 ```
@@ -76,6 +75,9 @@ Voici un schéma de l'architecture de notre projet, détaillant l'emplacement de
     ├── TP-HAX907X-Apprentissage-statistique/
     │    ├── csv_files/
     │    ├── images/
+    │    ├── script_python/
+    │    │    ├── svm_script.py
+    │    │    └── svm_source.py
     │    ├── .gitignore
     │    ├── Compte_rendu_STETSUN_THOMAS.html
     │    ├── Compte_rendu_STETSUN_THOMAS.qmd

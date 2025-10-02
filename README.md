@@ -80,6 +80,7 @@ Voici un schéma de l'architecture de notre projet, détaillant l'emplacement de
     │    │    └── svm_source.py
     │    ├── .gitignore
     │    ├── Compte_rendu_STETSUN_THOMAS.html
+    │    ├── Compte_rendu_STETSUN_THOMAS.pdf
     │    ├── Compte_rendu_STETSUN_THOMAS.qmd
     │    ├── LICENSE
     │    ├── README.md

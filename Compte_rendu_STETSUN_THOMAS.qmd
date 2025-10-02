@@ -468,7 +468,7 @@ Les rapports de classification confirment que :
 
 - pour $C = 10^{5}$, la performance s'améliore nettement avec une précision globale de $88 \%$, bien que quelques erreurs subsistent pour les deux individus.  
 
-Il est important de noter que l'accuracy de $70\%$$ pour $C = 10^{-5}$ ne reflète pas la véritable performance du modèle. Ce résultat est dû au déséquilibre des classes : comme il y a davantage d'images de *Colin Powell*, le classificateur prédit systématiquement cette classe, atteignant ainsi artificiellement $70\%$ de bonnes réponses. Cette mesure ne traduit donc pas la capacité réelle de reconnaissance, mais uniquement un biais lié à la distribution des données.
+Il est important de noter que l'accuracy de $70\%$ pour $C = 10^{-5}$ ne reflète pas la véritable performance du modèle. Ce résultat est dû au déséquilibre des classes : comme il y a davantage d'images de *Colin Powell*, le classificateur prédit systématiquement cette classe, atteignant ainsi artificiellement $70\%$ de bonnes réponses. Cette mesure ne traduit donc pas la capacité réelle de reconnaissance, mais uniquement un biais lié à la distribution des données.
 
 Pour évaluer correctement la performance du modèle, il est nécessaire d'utiliser des métriques telles que la précision (*precision*), le rappel (*recall*) et le *f1-score*. Pour $C = 10^{5}$, ces métriques s'améliorent pour les deux classes (*Donald Rumsfeld* : precision $= 0.82$, recall $= 0.76$ ; *Colin Powell* : precision $= 0.90$, recall $= 0.93$), indiquant une amélioration réelle de la qualité des prédictions.
 
@@ -627,7 +627,7 @@ L'exécution complète du script peut être longue, car pour chaque nombre de co
 
 3. Sauvegarde des résultats dans un fichier pour analyse ultérieure.  
 
-L'utilisation du paramètre `svd_solver='randomized'` permet d'accélérer le calcul de la PCA sur de grands ensembles de données tout en conservant une approximation précise des composantes principales. Pour l'ensemble des composantes allant de $20$ à $200$ (par pas de $10$), le calcul peut ainsi durer plusieurs heures.  
+L'utilisation du paramètre `svd_solver='randomized'` permet d'accélérer le calcul de la PCA sur de grands ensembles de données tout en conservant une approximation précise des composantes principales. Pour l'ensemble des composantes allant de $2$ à $200$ (par pas de $10$), le calcul peut ainsi durer plusieurs heures.  
 
 ```{.python .sourceCode}
 # Comparaison du temps et de la précision pour les composants de 2 à 200
@@ -803,11 +803,7 @@ Ces changements reflètent une évaluation plus réaliste de la généralisation
 
 <img src="images/output_12_images_ap_q7.png" style="display:inline-block">
 
-<img src="images/output_fig_ap_q7.png" style="display:inline-block">
-
-<img src="images/output_2fig_ap_q7.png" style="display:inline-block">
-
-Nous pouvons remarquer que les deux images sont devenues plus fragmentées, ce qui est encore dû au changement dans le modèle entraîné.
+Nous pouvons remarquer que l'image sont devenues plus fragmentées, ce qui est encore dû au changement dans le modèle entraîné.
 
 #### Question 5 
 

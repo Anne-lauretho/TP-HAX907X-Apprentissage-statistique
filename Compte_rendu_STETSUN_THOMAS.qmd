@@ -264,11 +264,11 @@ Pour notre analyse, nous avons utilisé un extrait prétraité du jeu de donnée
 Pour améliorer la compatibilité et la clarté, nous avons apporté une petite modification à la ligne de code originale se trouvant dans `svm_script.py` :  
 
 La ligne 
-```text
+```{.python .sourceCode}
 y = np.r_[np.zeros(np.sum(idx0)), np.ones(np.sum(idx1))].astype(np.int)
 ```
 a été remplacée par
-```text
+```{.python .sourceCode}
 y = np.r_[np.zeros(np.sum(idx0)), np.ones(np.sum(idx1))].astype(int)
 ```
 
@@ -468,6 +468,12 @@ Les rapports de classification confirment que :
 
 - pour $C = 10^{5}$, la performance s'améliore nettement avec une précision globale de $88 \%$, bien que quelques erreurs subsistent pour les deux individus.  
 
+Il est important de noter que l’accuracy de 70 % pour $C = 10^{-5}$ ne reflète pas une véritable performance du modèle. 
+Ce résultat est dû au déséquilibre des classes : comme il y a davantage d’images de Colin Powell, le classificateur prédit systématiquement cette classe et atteint ainsi artificiellement 70 % de bonnes réponses. 
+Cette valeur élevée d’accuracy n’indique donc pas une capacité réelle de reconnaissance, mais seulement un biais lié à la distribution des données.
+Cela souligne que l’accuracy seule ne reflète pas la véritable performance de classification. 
+Les métriques de *précision (precision)*, de *rappel (recall)* et de *F1 (f1-score)* permettent d’évaluer la capacité réelle du modèle à reconnaître chaque catégorie : pour $C = 10^{5}$, la précision et le rappel s’améliorent pour les deux classes (Donald Rumsfeld : precision = 0.82, recall = 0.76 ; Colin Powell : precision = 0.90, recall = 0.93), ce qui montre une amélioration effective de la qualité des prédictions.
+
 Nous comparons la précision du modèle avec le niveau de hasard (*baseline*). Ainsi, nous pouvons évaluer dans quelle mesure la valeur choisie de C améliore les résultats.
 
 ```{python}
@@ -512,9 +518,9 @@ plt.show()
 
 Ces visualisations mettent en évidence plusieurs points.
 
-Pour $C = 10^{-5}$, l'image des coefficients est très floue, et seules les caractéristiques les plus importantes sont prises en compte, telles que la taille du front, les sourcils, la forme du nez et des lèvres.
+Pour $C = 10^{-5}$, l'image du coefficient est plus floue et les points rouges (importants) et bleus (sans importance) de l'image sont plus grands, c'est-à-dire plus généraux. Les caractéristiques les plus importantes sont prises en compte en premier, telles que la taille du front et la ligne des cheveux, la forme du nez et des lèvres, le cou et l'arrière-plan (cela peut être dû au fait que les photos ont été prises sur un arrière-plan récurrent dans l'échantillon).
 
-Pour $C = 10^{5}$, le modèle devient très sensible et commence à détecter des motifs même là où il n’y en a pas. Par exemple, on observe beaucoup de points rouges sur l'arrière-plan des images, ce qui n'est pas pertinent, car les deux personnes peuvent être photographiées dans n'importe quelle pièce.
+Pour $C = 10^{5}$, le modèle devient beaucoup plus sensible et fragmente toutes les parties de l'image. On constate ainsi que les points rouges et bleus sont devenus beaucoup plus petits.
 
 ```{python}
 # Extraction des coefficients des deux modèles (C=1e-5 et C=1e5)
@@ -575,7 +581,7 @@ np.random.shuffle(X_noisy.T)
 run_svm_cv(X_noisy, y)
 ```
 
-Les résultats nous montrent que sans variables de nuisance, le SVM obtient une précision d'environ $0.89$ sur l'échantillon de test. En revanche, après l'ajout de $300$ variables aléatoires, la précision chute à environ $0.48$, soit proche du niveau du hasard. 
+Les résultats nous montrent que sans variables de nuisance, le SVM obtient une précision d'environ $0.92$ sur l'échantillon de test. En revanche, après l'ajout de $300$ variables aléatoires, la précision chute à environ $0.55$, soit proche du niveau du hasard. 
 
 Ce contraste illustre bien que l'ajout de dimensions inutiles entraine un surapprentissage et dégrade sa capacité de généralisation.
 
@@ -618,73 +624,362 @@ plt.grid(True)
 plt.show()
 ```
 
-Le graphique obtenu montre que pour un faible nombre de variables de nuisance, la précision reste relativement élevée, ce qui prouve que le modèle continue à exploiter les caractéristiques pertinentes. Mais à mesure que le nombre de dimensions bruitées augmente, la performance se détériore progressivement, confirmant l'effet négatif de variables non informatives.
+Le graphique obtenu montre que, pour un faible nombre de variables de nuisance, l’accuracy reste relativement élevée, ce qui confirme que le modèle continue à exploiter efficacement les caractéristiques pertinentes.
+Lorsque le nombre de variables de nuisance augmente, on observe des fluctuations de l’accuracy sur l’échantillon de test, dues à la nature aléatoire du bruit ajouté et au choix du paramètre optimal C à chaque itération.
+Il est important de noter que la comparaison « sans bruit » et « avec 300 variables de nuisance » montre effectivement une dégradation des performances du modèle.
 
-Ainsi, cette expérience illustre un phénomène classique : l'ajout de bruit augmente la complexité du problème sans apporter d'information utile, ce qui dégrade la généralisation du modèle.
+Cependant, la tendance générale du graphique n’indique pas que l’augmentation du nombre de variables de nuisance jusqu’à 1000 entraînera une baisse supplémentaire de l’accuracy : pour un grand nombre de variables de bruit indépendantes, le SVM linéaire commence à en lisser l’influence et la performance se stabilise à un niveau proche de celui d’origine.
+
 
 ### Question 6 - PCA
 
-si on utilise les codes 
+Pour suivre l’influence du paramètre C sur la précision des résultats, nous avons utilisé le code
 
-```text
+```{.python .sourceCode}
+#comparing time and accuracity for components from 2 to 200 
+
 import time as tm
-print("Score apres reduction de dimension")
 
-n_components = 10  # jouer avec ce parametre
-pca = PCA(n_components=n_components).fit(X_noisy)
-X_pca = pca.transform(X_noisy)
+# all the numbers to check
+components_list = list(range(2, 201, 10))
 
-# timing
-t0 = tm.time()
-run_svm_cv(X_pca, y)
-elapsed = tm.time() - t0
+# for autosave
+filename = "pca_results_autosave_copy_2.csv"
+if os.path.exists(filename):
+    # upload exister results
+    components_done, accuracies, times = [], [], []
+    with open(filename, "r") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            components_done.append(int(row["n_components"]))
+            accuracies.append(float(row["accuracy"]))
+            times.append(float(row["time_seconds"]))
+    print(f"Composants {len(components_done)} chargés déjà traités")
+else:
+    components_done, accuracies, times = [], [], []
 
-print(f"Nombre de composantes PCA: {n_components}")
-print(f"Temps de calcul: {elapsed:.3f} secondes")
+print("Score apres reduction de dimension (svd_solver='randomized')\n")
+
+
+accuracies = []  # for test score
+times = []       # for time
+print("Score apres reduction de dimension (svd_solver='randomized')\n")
+
+for n_components in components_list:
+# skip what already have
+    if n_components in components_done:
+        continue
+
+    print(f"Nombre de composantes PCA: {n_components}")
+    
+    #PCA с randomized solver - what prof asks
+    pca = PCA(n_components=n_components, svd_solver='randomized', random_state=42)
+    X_pca = pca.fit_transform(X_noisy)
+    
+    t0 = tm.time()
+    # hoping that, run_svm_cv giving back test_score
+    test_score = run_svm_cv(X_pca, y)  
+    elapsed = tm.time() - t0
+    
+    components_done.append(n_components)
+    accuracies.append(test_score)  # save accuracy
+    times.append(elapsed)          # save time
+    
+    print(f"Test score: {test_score:.3f}")
+    print(f"Temps de calcul: {elapsed:.3f} secondes\n")
+
+     # autosave
+    with open(filename, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["n_components", "accuracy", "time_seconds"])
+        for n, acc, t in zip(components_done, accuracies, times):
+            writer.writerow([n, acc, t])
+    print(f"Les résultats intermédiaires sont enregistrés dans {filename}\n")
+
+
+# graph
+fig, ax1 = plt.subplots(figsize=(8,5))
+
+# Précision
+color = 'tab:blue'
+ax1.set_xlabel('Nombre de composantes PCA')
+ax1.set_ylabel('Précision', color=color)
+ax1.plot(components_list, accuracies, marker='o', color=color, label='Précision')
+ax1.tick_params(axis='y', labelcolor=color)
+
+# Temps
+ax2 = ax1.twinx()
+color = 'tab:red'
+ax2.set_ylabel('Temps (s)', color=color)
+ax2.plot(components_list, times, marker='s', linestyle='--', color=color, label='Temps')
+ax2.tick_params(axis='y', labelcolor=color)
+ax2.set_yscale('log')  # logarithmic time scale
+
+plt.title("Influence du nombre de composantes PCA sur la précision et le temps")
+plt.show()
 ```
-sortie de code :
 
+Le code présenté permet de générer un graphique illustrant l’influence du nombre de composantes PCA sur la précision du modèle ainsi que sur le temps nécessaire pour traiter la requête. Sur le graphique, l’axe X représente le nombre de composantes PCA, l’axe Y gauche indique la précision (courbe bleue), et l’axe Y droit montre le temps de calcul en secondes (courbe rouge, échelle logarithmique).  
 
-Score apres reduction de dimension
-Generalization score for linear kernel: 0.6526315789473685, 0.5894736842105263 
+Il est important de noter que l’exécution complète du code prend un temps considérable, car pour chaque nombre de composantes PCA, les opérations suivantes sont effectuées :  
+1. transformation du jeu de données via PCA avec `svd_solver='randomized'`,  
+2. entraînement et test d’un SVM avec validation croisée sur la moitié des données,  
+3. sauvegarde des résultats dans un fichier pour analyse ultérieure.  
 
-Nombre de composantes PCA: 2
-Temps de calcul: 173.942 secondes
+L’utilisation du paramètre `svd_solver='randomized'` permet d’accélérer le calcul de la PCA sur de grands ensembles de données tout en conservant une approximation précise des composantes principales.  
 
-Score apres reduction de dimension
-Generalization score for linear kernel: 0.6421052631578947, 0.6 
+En raison de ces étapes, le calcul pour toutes les composantes de 20 à 200 (par pas de 10) peut durer plusieurs heures.  
 
-Nombre de composantes PCA: 10
-Temps de calcul: 733.982 secondes
+Pour les besoins du rapport, nous présentons donc **les résultats déjà générés**, afin d’illustrer la relation entre la précision et le temps de calcul en fonction du nombre de composantes PCA. Néanmoins, le code est entièrement fonctionnel et peut être exécuté de manière autonome en utilisant la version disponible dans le dépôt GitHub. (PUT THIS IS README MAYBE?) 
 
-Score apres reduction de dimension
-Generalization score for linear kernel: 0.6842105263157895, 0.6052631578947368 
+<img src="images/output_q6_1.png" alt="first try" style="display:inline-block; width:48%; margin-right:2%;">
+<img src="images/output_q6_2.png" alt="second try" style="display:inline-block; width:48%;">
 
-Nombre de composantes PCA: 20
-Temps de calcul: 1357.474 secondes
+Les graphiques montrent l’influence du nombre de composantes PCA sur la précision du modèle et sur le temps de traitement. Comme nous avons utilisé la fonction `sklearn.decomposition.PCA(svd_solver='randomized')`, la répartition des classes diffère légèrement à chaque exécution en raison de l’initialisation aléatoire, ce qui rend la qualité de la classification instable.  
 
-Score apres reduction de dimension
-Generalization score for linear kernel: 0.8789473684210526, 0.5736842105263158 
+Cependant, on peut constater que le temps nécessaire au traitement des requêtes reste à peu près constant. Il atteint son pic entre 32 et 52 composantes, ce qui s’explique par le fait que, pour un petit nombre de composantes, le PCA tente de conserver le maximum de variance des caractéristiques originales. À ce stade, la charge de calcul pour le SVM est plus élevée, car les données contiennent encore une quantité significative d’information utile pour la construction de l’hyperplan, et l’algorithme passe plus de temps à optimiser. Ensuite, lorsque le nombre de composantes augmente, le PCA commence à disperser les caractéristiques significatives, réduisant ainsi la charge sur le SVM et entraînant une diminution du temps de traitement.  
 
-Score apres reduction de dimension
-Generalization score for linear kernel: 0.7736842105263158, 0.5473684210526316 
+<img src="images/output_q6_0_old.png" style="display:inline-block">
 
-Nombre de composantes PCA: 50
-Temps de calcul: 2886.425 secondes
-
-Nombre de composantes PCA: 100
-Temps de calcul: 0.145 secondes
-
-Score apres reduction de dimension
-Generalization score for linear kernel: 0.868421052631579, 0.631578947368421 
-
-Nombre de composantes PCA: 150
-Temps de calcul: 0.095 secondes
-
-Score apres reduction de dimension
-Generalization score for linear kernel: 1.0, 0.5 
-
-Nombre de composantes PCA: 200
-Temps de calcul: 0.101 secondes
+On peut également remarquer que cette tendance se maintient lorsqu’on entraîne le modèle sur un autre jeu de données, par exemple pour la comparaison de deux autres personnes : Tony Blair et Colin Powell, où l’on observe une dépendance similaire entre le nombre de composantes PCA et la précision ainsi que le temps de calcul.  
 
 ### Question 7 - Biais dans le prétaitement
+
+Dans le prétraitement initial des données, la normalisation était appliquée **avant la séparation** des échantillons d’entraînement et de test. Cela signifie que la moyenne et l’écart-type ont été calculés sur l’ensemble du jeu de données, ce qui a entraîné une **fuite d’information** depuis l’échantillon de test vers l’entraînement. Ce biais systématique (biais de prétraitement) peut donner une estimation trop optimiste de la précision du modèle.  
+
+Dans la version corrigée, nous avons d’abord séparé les données en ensembles d’entraînement et de test, puis nous avons normalisé **uniquement à partir de l’ensemble d’entraînement**. Les valeurs de moyenne et d’écart-type ainsi calculées sont ensuite utilisées pour normaliser l’échantillon de test. Cette approche élimine le biais et permet d’évaluer la performance réelle du modèle sur des données non vues.  
+
+```{python}
+# q7
+
+####################################################################
+# Download the data and unzip; then load it as numpy arrays
+lfw_people = fetch_lfw_people(min_faces_per_person=70, resize=0.4,
+                              color=True, funneled=False, slice_=None,
+                              download_if_missing=True)
+# data_home='.'
+
+# introspect the images arrays to find the shapes (for plotting)
+images = lfw_people.images
+n_samples, h, w, n_colors = images.shape
+
+# the label to predict is the id of the person
+target_names = lfw_people.target_names.tolist()
+
+####################################################################
+# Pick a pair to classify such as
+# names = ['Donald Rumsfeld', 'Colin Powell']
+names = ['Donald Rumsfeld', 'Colin Powell']
+
+idx0 = (lfw_people.target == target_names.index(names[0]))
+idx1 = (lfw_people.target == target_names.index(names[1]))
+images = np.r_[images[idx0], images[idx1]]
+n_samples = images.shape[0]
+y = np.r_[np.zeros(np.sum(idx0)), np.ones(np.sum(idx1))].astype(int)
+
+# plot a sample set of the data
+plot_gallery(images, np.arange(12))
+plt.show()
+
+# separating data first
+indices = np.random.permutation(X.shape[0])
+train_idx, test_idx = indices[:X.shape[0] // 2], indices[X.shape[0] // 2:]
+X_train, X_test = X[train_idx, :], X[test_idx, :]
+
+# normalisation just for train
+mean = np.mean(X_train, axis=0)
+std = np.std(X_train, axis=0)
+
+X_train = (X_train - mean) / std
+X_test = (X_test - mean) / std
+```
+
+Après cela, exécutons le même code pour suivre la différence de sortie.
+
+```{python}
+# Q4
+# let's calculate the error
+errors = []
+for C in Cs:
+    clf = SVC(kernel="linear", C=C)
+    clf.fit(X_train, y_train)
+    errors.append(1 - clf.score(X_test, y_test))
+
+# look for the min of the error
+best_ind = np.argmin(errors)
+best_C = Cs[best_ind]
+best_error = errors[best_ind]
+
+plt.figure()
+plt.plot(Cs, errors, marker="o")
+
+# plot error
+plt.scatter(best_C, best_error, color="red", s=100, zorder=5)
+
+plt.xscale("log")
+plt.xlabel("Paramètre de régularisation C")
+plt.ylabel("Erreur de prédiction")
+plt.title("Influence de C sur la performance")
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+
+
+print("Best C: {}".format(Cs[best_ind]))
+print("Best error: {}".format(np.min(errors)))
+print("Best accuracy(score): {}".format(1 - np.min(errors)))
+t0 = time()
+
+```
+
+Après correction du prétraitement et normalisation uniquement sur l’ensemble d’entraînement, la meilleure valeur du paramètre C a fortement diminué, passant de $C = 10^{-3}$ à $C = 10^{-5}$. Cela s’explique par le fait que le modèle ne bénéficie plus d’informations provenant de l’ensemble de test lors du scaling des caractéristiques. 
+
+Ainsi, ce changement reflète une évaluation plus réaliste de la capacité de généralisation du modèle et non une dégradation de celui-ci.
+
+```{python}
+# confusion matrix
+# small C
+clf_small = SVC(kernel="linear", C=1e-5)
+clf_small.fit(X_train, y_train)
+y_pred_small = clf_small.predict(X_test)
+
+cm_small = confusion_matrix(y_test, y_pred_small, labels=clf_small.classes_)
+disp_small = ConfusionMatrixDisplay(confusion_matrix=cm_small, display_labels=clf_small.classes_)
+
+# big C
+clf_large = SVC(kernel="linear", C=1e5)
+clf_large.fit(X_train, y_train)
+y_pred_large = clf_large.predict(X_test)
+
+cm_large = confusion_matrix(y_test, y_pred_large, labels=clf_large.classes_)
+disp_large = ConfusionMatrixDisplay(confusion_matrix=cm_large, display_labels=clf_large.classes_)
+
+# rows
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+# 0 = Donald Rumsfeld, 1 = Colin Powell)
+class_names = ['Donald Rumsfeld', 'Colin Powell']
+
+disp_small = ConfusionMatrixDisplay(confusion_matrix=cm_small,
+                                    display_labels=class_names)
+disp_small.plot(ax=axes[0], cmap="Blues", xticks_rotation='vertical', colorbar=False)
+axes[0].set_title("Confusion matrix (C=1e-5)")
+disp_large = ConfusionMatrixDisplay(confusion_matrix=cm_large,
+                                    display_labels=class_names)
+disp_large.plot(ax=axes[1], cmap="Blues", xticks_rotation='vertical', colorbar=False)
+axes[1].set_title("Confusion matrix (C=1e5)")
+
+plt.tight_layout()
+plt.show()
+
+# the same thing but in numbers
+print("=== Classification report (C=1e-5) ===")
+print(classification_report(y_test, y_pred_small, target_names=class_names))
+
+print("\n=== Classification report (C=1e5) ===")
+print(classification_report(y_test, y_pred_large, target_names=class_names))
+
+```
+
+En comparant les nouveaux résultats avec les précédents, on constate une diminution significative de la précision du modèle.
+
+- pour $C = 10^{-5}$, l’accuracy est passée de $0.70$ à $0.68$. Le modèle ne reconnaît toujours pas la classe *Donald Rumsfeld*, tandis que la précision et le rappel pour *Colin Powell* restent élevés.
+
+- pour $C = 10^{-}$, a baisse est plus marquée : l’accuracy chute de $0.88$ à $0.50$. Le modèle distingue moins bien les deux classes : précision et rappel pour *Donald Rumsfeld* et *Colin Powell* sont fortement réduits.
+
+La raison de cette variation réside dans la correction du biais de prétraitement : la normalisation est désormais effectuée uniquement sur l’ensemble d’entraînement, et le modèle n’utilise plus d’informations provenant de l’ensemble de test pour le scaling des caractéristiques. Cela rend l’évaluation sur l’ensemble de test plus réaliste, mais fait disparaître les performances artificiellement élevées observées auparavant.
+
+```{python}
+# predict labels for the X_test images with the best classifier
+clf = SVC(kernel="linear", C=Cs[ind])
+clf.fit(X_train, y_train)
+y_pred = clf.predict(X_test)
+
+print("done in %0.3fs" % (time() - t0))
+# The chance level is the accuracy that will be reached when constantly predicting the majority class.
+print("Chance level : %s" % max(np.mean(y), 1. - np.mean(y)))
+print("Accuracy : %s" % clf.score(X_test, y_test))
+
+```
+
+```{python}
+####################################################################
+# Qualitative evaluation of the predictions using matplotlib
+
+prediction_titles = [title(y_pred[i], y_test[i], names)
+                     for i in range(y_pred.shape[0])]
+
+plot_gallery(images_test, prediction_titles)
+plt.show()
+
+####################################################################
+# Look at the coefficients
+plt.figure()
+plt.imshow(np.reshape(clf.coef_, (h, w)))
+plt.show()
+
+```
+
+```{python}
+# Qualitative evaluation of the predictions using matplotlib
+####################################################################
+# Look at the coefficients pour C=1e-5 et C=1e5
+coef_small = clf_small.coef_.ravel()
+coef_large = clf_large.coef_.ravel()
+
+
+fig, axes = plt.subplots(1, 2, figsize=(10, 5))
+
+axes[0].imshow(coef_small.reshape(h, w), cmap=plt.cm.seismic, interpolation="nearest")
+axes[0].set_title("Coefficients (C=1e-5)")
+
+axes[1].imshow(coef_large.reshape(h, w), cmap=plt.cm.seismic, interpolation="nearest")
+axes[1].set_title("Coefficients (C=1e5)")
+
+plt.tight_layout()
+plt.show()
+```
+
+Nous pouvons remarquer que les deux images sont devenues plus fragmentées, ce qui est encore dû au changement dans le modèle entraîné
+
+```{python}
+# Q5
+
+def run_svm_cv(_X, _y):
+    _indices = np.random.permutation(_X.shape[0])
+    _train_idx, _test_idx = _indices[:_X.shape[0] // 2], _indices[_X.shape[0] // 2:]
+    _X_train, _X_test = _X[_train_idx, :], _X[_test_idx, :]
+    _y_train, _y_test = _y[_train_idx], _y[_test_idx]
+
+    _parameters = {'kernel': ['linear'], 'C': list(np.logspace(-3, 3, 5))}
+    _svr = svm.SVC()
+    _clf_linear = GridSearchCV(_svr, _parameters)
+    _clf_linear.fit(_X_train, _y_train)
+
+    print('Generalization score for linear kernel: %s, %s \n' %
+          (_clf_linear.score(_X_train, _y_train), _clf_linear.score(_X_test, _y_test)))
+
+print("Score sans variable de nuisance")
+run_svm_cv(X, y)
+
+print("Score avec variable de nuisance")
+n_features = X.shape[1]
+# We add nuisance variables
+sigma = 1
+noise = sigma * np.random.randn(n_samples, 300, ) 
+# with gaussian coefficients of std sigma
+X_noisy = np.concatenate((X, noise), axis=1)
+X_noisy = X_noisy[np.random.permutation(X.shape[0])]
+np.random.shuffle(X_noisy.T)
+
+run_svm_cv(X_noisy, y)
+```
+
+Les résultats nous montrent que sans variables de nuisance, le SVM obtient une précision d'environ $0.89$ sur l'échantillon de test. En revanche, après l'ajout de $300$ variables aléatoires, la précision chute à environ $0.53$, soit proche du niveau du hasard. 
+
+On peut constater que les performances sont légèrement inférieures par rapport aux résultats initiaux de la question 5. Cela s’explique par le fait que nous utilisons désormais un ordre correct des opérations : séparation des ensembles d’entraînement et de test avant normalisation. En conséquence, l’évaluation sur l’ensemble de test est plus réaliste, et le modèle n’utilise plus d’informations provenant des données de test lors de la normalisation, ce qui entraîne une diminution de la précision lorsque des variables de nuisance sont ajoutées.
+
+<img src="images/output_q6_apres_q7.png" style="display:inline-block">
+
+Après avoir modifié l’ordre des opérations sur l’échantillon et corrigé l’erreur de fuite d’information, lors de l’utilisation du code pur le question 6, on constate que le temps total d’exécution du code a considérablement diminué. Cela s’explique par le fait que la normalisation est désormais effectuée uniquement sur l’ensemble d’entraînement, et que le modèle ne réalise plus de calculs inutiles sur l’ensemble complet des données.
+Cependant, la tendance générale du temps de traitement reste la même : on observe un pic entre 32 et 52 composantes PCA, puis le temps diminue progressivement.
+

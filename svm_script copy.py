@@ -167,16 +167,6 @@ plt.draw()
 
 #%%
 ###############################################################################
-#               SVM GUI
-###############################################################################
-
-# please open a terminal and run python svm_gui.py
-# Then, play with the applet : generate various datasets and observe the
-# different classifiers you can obtain by varying the kernel
-
-
-#%%
-###############################################################################
 #               Face Recognition Task
 ###############################################################################
 """
@@ -227,9 +217,6 @@ plt.show()
 # features using only illuminations
 X = (np.mean(images, axis=3)).reshape(n_samples, -1)
 
-# # or compute features using colors (3 times more features)
-# X = images.copy().reshape(n_samples, -1)
-
 # Scale features
 X -= np.mean(X, axis=0)
 X /= np.std(X, axis=0)
@@ -237,10 +224,6 @@ X /= np.std(X, axis=0)
 #%%
 ####################################################################
 # Split data into a half training and half test set
-# X_train, X_test, y_train, y_test, images_train, images_test = \
-#    train_test_split(X, y, images, test_size=0.5, random_state=0)
-# X_train, X_test, y_train, y_test = \
-#    train_test_split(X, y, test_size=0.5, random_state=0)
 
 indices = np.random.permutation(X.shape[0])
 train_idx, test_idx = indices[:X.shape[0] // 2], indices[X.shape[0] // 2:]
@@ -471,34 +454,9 @@ plt.ylabel("Accuracy sur l'échantillon de test")
 plt.grid(True)
 plt.show()
 
-#%%
-# Q6
-
-# prof code
-#print("Score apres reduction de dimension")
-#n_components = 100  # jouer avec ce parametre
-#pca = PCA(n_components=n_components).fit(X_noisy)
-#X_pca = pca.transform(X_noisy)
-#run_svm_cv(X_pca, y)
-
-# our code
-import time as tm
-print("Score apres reduction de dimension")
-
-n_components = 12  # play with this setting
-pca = PCA(n_components=n_components).fit(X_noisy)
-X_pca = pca.transform(X_noisy)
-
-# for calculate time
-t0 = tm.time()
-run_svm_cv(X_pca, y)
-elapsed = tm.time() - t0
-
-print(f"Nombre de composantes PCA: {n_components}")
-print(f"Temps de calcul: {elapsed:.3f} secondes")
 # %%
-#run it if you want, it took me 5h+ no joke, im not even sure its the thing he want us to do  
-#Hunger games
+# Q6
+#comparing time and accuracity for components from 2 to 200 
 
 import time as tm
 
@@ -614,14 +572,281 @@ y = np.r_[np.zeros(np.sum(idx0)), np.ones(np.sum(idx1))].astype(int)
 plot_gallery(images, np.arange(12))
 plt.show()
 
-# Сначала делим данные
+# separating data first
 indices = np.random.permutation(X.shape[0])
 train_idx, test_idx = indices[:X.shape[0] // 2], indices[X.shape[0] // 2:]
 X_train, X_test = X[train_idx, :], X[test_idx, :]
 
-# Потом нормализация: считаем только по train
+# normalisation just for train
 mean = np.mean(X_train, axis=0)
 std = np.std(X_train, axis=0)
 
 X_train = (X_train - mean) / std
 X_test = (X_test - mean) / std
+
+#%%
+# Q4
+print("--- Linear kernel ---")
+print("Fitting the classifier to the training set")
+t0 = time()
+
+# fit a classifier (linear) and test all the Cs
+Cs = 10. ** np.arange(-5, 6)
+scores = []
+for C in Cs:
+    clf = SVC(kernel="linear", C=C)
+    clf.fit(X_train, y_train)
+    scores.append(clf.score(X_test, y_test))
+
+ind = np.argmax(scores)
+print("Best C: {}".format(Cs[ind]))
+
+plt.figure()
+plt.plot(Cs, scores)
+plt.xlabel("Parametres de regularisation C")
+plt.ylabel("Scores d'apprentissage")
+plt.xscale("log")
+plt.tight_layout()
+plt.show()
+print("Best score: {}".format(np.max(scores)))
+
+print("Predicting the people names on the testing set")
+t0 = time()
+
+
+#%%
+# let's calculate the error
+errors = []
+for C in Cs:
+    clf = SVC(kernel="linear", C=C)
+    clf.fit(X_train, y_train)
+    errors.append(1 - clf.score(X_test, y_test))
+
+# look for the min of the error
+best_ind = np.argmin(errors)
+best_C = Cs[best_ind]
+best_error = errors[best_ind]
+
+plt.figure()
+plt.plot(Cs, errors, marker="o")
+
+# plot error
+plt.scatter(best_C, best_error, color="red", s=100, zorder=5)
+
+plt.xscale("log")
+plt.xlabel("Paramètre de régularisation C")
+plt.ylabel("Erreur de prédiction")
+plt.title("Influence de C sur la performance")
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+
+
+print("Best C: {}".format(Cs[best_ind]))
+print("Best error: {}".format(np.min(errors)))
+print("Best accuracy(score): {}".format(1 - np.min(errors)))
+t0 = time()
+
+#%%
+# confusion matrix
+# small C
+clf_small = SVC(kernel="linear", C=1e-5)
+clf_small.fit(X_train, y_train)
+y_pred_small = clf_small.predict(X_test)
+
+cm_small = confusion_matrix(y_test, y_pred_small, labels=clf_small.classes_)
+disp_small = ConfusionMatrixDisplay(confusion_matrix=cm_small, display_labels=clf_small.classes_)
+
+# big C
+clf_large = SVC(kernel="linear", C=1e5)
+clf_large.fit(X_train, y_train)
+y_pred_large = clf_large.predict(X_test)
+
+cm_large = confusion_matrix(y_test, y_pred_large, labels=clf_large.classes_)
+disp_large = ConfusionMatrixDisplay(confusion_matrix=cm_large, display_labels=clf_large.classes_)
+
+# rows
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+# 0 = Donald Rumsfeld, 1 = Colin Powell)
+class_names = ['Donald Rumsfeld', 'Colin Powell']
+
+disp_small = ConfusionMatrixDisplay(confusion_matrix=cm_small,
+                                    display_labels=class_names)
+disp_small.plot(ax=axes[0], cmap="Blues", xticks_rotation='vertical', colorbar=False)
+axes[0].set_title("Confusion matrix (C=1e-5)")
+disp_large = ConfusionMatrixDisplay(confusion_matrix=cm_large,
+                                    display_labels=class_names)
+disp_large.plot(ax=axes[1], cmap="Blues", xticks_rotation='vertical', colorbar=False)
+axes[1].set_title("Confusion matrix (C=1e5)")
+
+plt.tight_layout()
+plt.show()
+
+#%% the same thing but in numbers
+print("=== Classification report (C=1e-5) ===")
+print(classification_report(y_test, y_pred_small, target_names=class_names))
+
+print("\n=== Classification report (C=1e5) ===")
+print(classification_report(y_test, y_pred_large, target_names=class_names))
+
+#%%
+# predict labels for the X_test images with the best classifier
+clf = SVC(kernel="linear", C=Cs[ind])
+clf.fit(X_train, y_train)
+y_pred = clf.predict(X_test)
+
+print("done in %0.3fs" % (time() - t0))
+# The chance level is the accuracy that will be reached when constantly predicting the majority class.
+print("Chance level : %s" % max(np.mean(y), 1. - np.mean(y)))
+print("Accuracy : %s" % clf.score(X_test, y_test))
+
+#%%
+####################################################################
+# Qualitative evaluation of the predictions using matplotlib
+
+prediction_titles = [title(y_pred[i], y_test[i], names)
+                     for i in range(y_pred.shape[0])]
+
+plot_gallery(images_test, prediction_titles)
+plt.show()
+
+####################################################################
+# Look at the coefficients
+plt.figure()
+plt.imshow(np.reshape(clf.coef_, (h, w)))
+plt.show()
+
+#%% 
+# Qualitative evaluation of the predictions using matplotlib
+####################################################################
+# Look at the coefficients pour C=1e-5 et C=1e5
+coef_small = clf_small.coef_.ravel()
+coef_large = clf_large.coef_.ravel()
+
+
+fig, axes = plt.subplots(1, 2, figsize=(10, 5))
+
+axes[0].imshow(coef_small.reshape(h, w), cmap=plt.cm.seismic, interpolation="nearest")
+axes[0].set_title("Coefficients (C=1e-5)")
+
+axes[1].imshow(coef_large.reshape(h, w), cmap=plt.cm.seismic, interpolation="nearest")
+axes[1].set_title("Coefficients (C=1e5)")
+
+plt.tight_layout()
+plt.show()
+
+#%%
+# Q5
+
+def run_svm_cv(_X, _y):
+    _indices = np.random.permutation(_X.shape[0])
+    _train_idx, _test_idx = _indices[:_X.shape[0] // 2], _indices[_X.shape[0] // 2:]
+    _X_train, _X_test = _X[_train_idx, :], _X[_test_idx, :]
+    _y_train, _y_test = _y[_train_idx], _y[_test_idx]
+
+    _parameters = {'kernel': ['linear'], 'C': list(np.logspace(-3, 3, 5))}
+    _svr = svm.SVC()
+    _clf_linear = GridSearchCV(_svr, _parameters)
+    _clf_linear.fit(_X_train, _y_train)
+
+    print('Generalization score for linear kernel: %s, %s \n' %
+          (_clf_linear.score(_X_train, _y_train), _clf_linear.score(_X_test, _y_test)))
+
+print("Score sans variable de nuisance")
+run_svm_cv(X, y)
+
+print("Score avec variable de nuisance")
+n_features = X.shape[1]
+# We add nuisance variables
+sigma = 1
+noise = sigma * np.random.randn(n_samples, 300, ) 
+# with gaussian coefficients of std sigma
+X_noisy = np.concatenate((X, noise), axis=1)
+X_noisy = X_noisy[np.random.permutation(X.shape[0])]
+np.random.shuffle(X_noisy.T)
+
+run_svm_cv(X_noisy, y)
+
+# %%
+# Q6
+#comparing time and accuracity for components from 2 to 200 
+
+import time as tm
+
+# all the numbers to check
+components_list = list(range(2, 201, 10))
+
+# for autosave
+filename = "pca_results_autosave_copy_2.csv"
+if os.path.exists(filename):
+    # upload exister results
+    components_done, accuracies, times = [], [], []
+    with open(filename, "r") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            components_done.append(int(row["n_components"]))
+            accuracies.append(float(row["accuracy"]))
+            times.append(float(row["time_seconds"]))
+    print(f"Composants {len(components_done)} chargés déjà traités")
+else:
+    components_done, accuracies, times = [], [], []
+
+print("Score apres reduction de dimension (svd_solver='randomized')\n")
+
+
+accuracies = []  # for test score
+times = []       # for time
+print("Score apres reduction de dimension (svd_solver='randomized')\n")
+
+for n_components in components_list:
+# skip what already have
+    if n_components in components_done:
+        continue
+
+    print(f"Nombre de composantes PCA: {n_components}")
+    
+    #PCA с randomized solver - what prof asks
+    pca = PCA(n_components=n_components, svd_solver='randomized', random_state=42)
+    X_pca = pca.fit_transform(X_noisy)
+    
+    t0 = tm.time()
+    # hoping that, run_svm_cv giving back test_score
+    test_score = run_svm_cv(X_pca, y)  
+    elapsed = tm.time() - t0
+    
+    components_done.append(n_components)
+    accuracies.append(test_score)  # save accuracy
+    times.append(elapsed)          # save time
+    
+    print(f"Test score: {test_score:.3f}")
+    print(f"Temps de calcul: {elapsed:.3f} secondes\n")
+
+     # autosave
+    with open(filename, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["n_components", "accuracy", "time_seconds"])
+        for n, acc, t in zip(components_done, accuracies, times):
+            writer.writerow([n, acc, t])
+    print(f"Les résultats intermédiaires sont enregistrés dans {filename}\n")
+
+
+# graph
+fig, ax1 = plt.subplots(figsize=(8,5))
+
+# Précision
+color = 'tab:blue'
+ax1.set_xlabel('Nombre de composantes PCA')
+ax1.set_ylabel('Précision', color=color)
+ax1.plot(components_list, accuracies, marker='o', color=color, label='Précision')
+ax1.tick_params(axis='y', labelcolor=color)
+
+# Temps
+ax2 = ax1.twinx()
+color = 'tab:red'
+ax2.set_ylabel('Temps (s)', color=color)
+ax2.plot(components_list, times, marker='s', linestyle='--', color=color, label='Temps')
+ax2.tick_params(axis='y', labelcolor=color)
+ax2.set_yscale('log')  # logarithmic time scale
+
+plt.title("Influence du nombre de composantes PCA sur la précision et le temps")
+plt.show()

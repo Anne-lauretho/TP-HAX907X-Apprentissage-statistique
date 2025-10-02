@@ -56,7 +56,6 @@ import matplotlib.pyplot as plt     # pour les visualisations
 from sklearn.svm import SVC         # le classifieur SVM et scikit-learn
 
 # Importations supplémentaires 
-from svm_source import *            # importe toutes les fonctions définies dans un fichier externe svm_source.py
 from sklearn import svm
 from sklearn import datasets
 from sklearn.utils import shuffle
@@ -67,6 +66,12 @@ from sklearn.decomposition import PCA
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.metrics import classification_report
 from time import time
+import sys
+import os
+
+script_dir = os.path.join(os.getcwd(), 'script_python')
+sys.path.append(script_dir)
+from svm_source import *            # importe toutes les fonctions définies dans un fichier externe svm_source.py
 
 # Préparation de l'environnement
 scaler = StandardScaler()

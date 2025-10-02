@@ -14,6 +14,7 @@ from sklearn.decomposition import PCA
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.metrics import classification_report
 from time import time
+import time as tm
 import csv
 import os
 
@@ -457,16 +458,19 @@ plt.show()
 # %%
 # Q6
 #comparing time and accuracity for components from 2 to 200 
-
-import time as tm
-
 # all the numbers to check
 components_list = list(range(2, 201, 10))
 
 # for autosave
-filename = "pca_results_autosave_copy_2.csv"
+# Relative path to the csv_files folder from the script
+csv_files_dir = os.path.join("..", "csv_files")  # go up one level then go to csv files
+os.makedirs(csv_files_dir, exist_ok=True)    # creates the folder if it does not exist
+
+# File name with full path
+filename = os.path.join(csv_files_dir, "pca_results_autosave_copy_2test.csv")
+
 if os.path.exists(filename):
-    # upload exister results
+    # load existing results
     components_done, accuracies, times = [], [], []
     with open(filename, "r") as f:
         reader = csv.DictReader(f)
@@ -474,12 +478,11 @@ if os.path.exists(filename):
             components_done.append(int(row["n_components"]))
             accuracies.append(float(row["accuracy"]))
             times.append(float(row["time_seconds"]))
-    print(f"Composants {len(components_done)} chargés déjà traités")
+    print(f"Composants {len(components_done)} déjà traités")
 else:
     components_done, accuracies, times = [], [], []
 
-print("Score apres reduction de dimension (svd_solver='randomized')\n")
-
+print("Score après réduction de dimension (svd_solver='randomized')\n")
 
 accuracies = []  # for test score
 times = []       # for time
@@ -520,14 +523,14 @@ for n_components in components_list:
 # graph
 fig, ax1 = plt.subplots(figsize=(8,5))
 
-# Précision
+# Acurracy
 color = 'tab:blue'
 ax1.set_xlabel('Nombre de composantes PCA')
 ax1.set_ylabel('Précision', color=color)
 ax1.plot(components_list, accuracies, marker='o', color=color, label='Précision')
 ax1.tick_params(axis='y', labelcolor=color)
 
-# Temps
+# Times
 ax2 = ax1.twinx()
 color = 'tab:red'
 ax2.set_ylabel('Temps (s)', color=color)
@@ -777,9 +780,14 @@ import time as tm
 components_list = list(range(2, 201, 10))
 
 # for autosave
-filename = "pca_results_autosave_copy_2.csv"
+# Relative path to the csv_files folder from the script
+csv_files_dir = os.path.join("..", "csv_files")  # go up one level then go to csv files
+os.makedirs(csv_files_dir, exist_ok=True)    # creates the folder if it does not exist
+
+# Nom du fichier avec chemin complet
+filename = os.path.join(csv_files_dir, "pca_results_autosave_copy_2_q7.csv")
+
 if os.path.exists(filename):
-    # upload exister results
     components_done, accuracies, times = [], [], []
     with open(filename, "r") as f:
         reader = csv.DictReader(f)
@@ -787,11 +795,11 @@ if os.path.exists(filename):
             components_done.append(int(row["n_components"]))
             accuracies.append(float(row["accuracy"]))
             times.append(float(row["time_seconds"]))
-    print(f"Composants {len(components_done)} chargés déjà traités")
+    print(f"Composants {len(components_done)} déjà traités")
 else:
     components_done, accuracies, times = [], [], []
 
-print("Score apres reduction de dimension (svd_solver='randomized')\n")
+print("Score après réduction de dimension (svd_solver='randomized')\n")
 
 
 accuracies = []  # for test score
@@ -833,14 +841,14 @@ for n_components in components_list:
 # graph
 fig, ax1 = plt.subplots(figsize=(8,5))
 
-# Précision
+# Accuracy
 color = 'tab:blue'
 ax1.set_xlabel('Nombre de composantes PCA')
 ax1.set_ylabel('Précision', color=color)
 ax1.plot(components_list, accuracies, marker='o', color=color, label='Précision')
 ax1.tick_params(axis='y', labelcolor=color)
 
-# Temps
+# Time
 ax2 = ax1.twinx()
 color = 'tab:red'
 ax2.set_ylabel('Temps (s)', color=color)

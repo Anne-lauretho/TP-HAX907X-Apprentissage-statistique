@@ -73,8 +73,8 @@ Voici un schéma de l'architecture de notre projet, détaillant l'emplacement de
 
 ```TP_SVM
     ├── TP-HAX907X-Apprentissage-statistique/
-    │    ├── csv_files/
-    │    ├── images/
+    │    ├── csv_files/...
+    │    ├── images/...
     │    ├── script_python/
     │    │    ├── svm_script.py
     │    │    └── svm_source.py
@@ -83,7 +83,5 @@ Voici un schéma de l'architecture de notre projet, détaillant l'emplacement de
     │    ├── Compte_rendu_STETSUN_THOMAS.qmd
     │    ├── LICENSE
     │    ├── README.md
-    │    ├── requirements.txt
-    │    ├── svm_script.py
-    │    └── svm_source.py
+    │    └── requirements.txt
 ```

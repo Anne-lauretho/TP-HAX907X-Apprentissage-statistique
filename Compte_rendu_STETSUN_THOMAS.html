@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.549">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>compte_rendu_stetsun_thomas</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Compte_rendu_STETSUN_THOMAS_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Compte_rendu_STETSUN_THOMAS_files/libs/quarto-html/quarto.js"></script>
+<script src="Compte_rendu_STETSUN_THOMAS_files/libs/quarto-html/popper.min.js"></script>
+<script src="Compte_rendu_STETSUN_THOMAS_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Compte_rendu_STETSUN_THOMAS_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Compte_rendu_STETSUN_THOMAS_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Compte_rendu_STETSUN_THOMAS_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Compte_rendu_STETSUN_THOMAS_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Compte_rendu_STETSUN_THOMAS_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Compte_rendu_STETSUN_THOMAS_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Sommaire</h2>
+   
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#mise-en-œuvre" id="toc-mise-en-œuvre" class="nav-link" data-scroll-target="#mise-en-œuvre">Mise en œuvre</a>
+  <ul class="collapse">
+  <li><a href="#jeu-de-données-jouet-deux-gaussiennes" id="toc-jeu-de-données-jouet-deux-gaussiennes" class="nav-link" data-scroll-target="#jeu-de-données-jouet-deux-gaussiennes">1. Jeu de données jouet (deux gaussiennes)</a></li>
+  <li><a href="#jeu-de-données-iris" id="toc-jeu-de-données-iris" class="nav-link" data-scroll-target="#jeu-de-données-iris">2. Jeu de données iris</a></li>
+  <li><a href="#classification-de-visages" id="toc-classification-de-visages" class="nav-link" data-scroll-target="#classification-de-visages">3. Classification de visages</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+
+
+
+<div style="text-align:center; padding:2em; font-family:Arial, sans-serif; height:100vh; display:flex; flex-direction:column; justify-content:space-between;">
+<div style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0 2em;">
+<p><!-- Logo UM à gauche --> <img src="images/Universite.png" style="height: 100px;"></p>
+<p><!-- Logo SSD-MIND à droite --> <img src="images/ssd_mind_logo.png" style="height: 100px;"></p>
+</div>
+<!-- Titre central -->
+<section id="tp-support-vector-machines" class="level1">
+<h1>TP : Support Vector Machines</h1>
+<hr>
+<section id="réalisé-par" class="level3">
+<h3 class="anchored" data-anchor-id="réalisé-par">Réalisé par :</h3>
+<p><strong>STETSUN Kateryna</strong><br>
+<strong>THOMAS Anne-Laure</strong></p>
+<p>Date : <span id="today"></span></p>
+</section>
+</section>
+<div>
+
+</div>
+</div>
+<script>
+document.getElementById("today").textContent = new Date().toLocaleDateString("fr-FR");
+</script>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Les machines à vecteurs de support (SVM), introduites par Vapnik dans les années 1990, sont des méthodes de classification supervisée largement utilisées. Leur principe repose sur la recherche d’un hyperplan séparateur maximisant la marge entre deux classes.</p>
+<p>Lorsque les données ne sont pas linéairement séparables, on peut utiliser le kernel trick, qui permet de projeter implicitement les données dans un espace de dimension supérieure grâce à des noyaux tels que le linéaire, le polynomial ou le gaussien RBF.</p>
+<p>Un paramètre clé, noté C, contrôle le compromis entre la largeur de la marge et les erreurs de classification.</p>
+<p>L’objectif de ce TP est de mettre en pratique ces concepts à l’aide de la bibliothèque scikit-learn, sur des jeux de données simulés et réels.</p>
+</section>
+<section id="mise-en-œuvre" class="level1">
+<h1>Mise en œuvre</h1>
+<section id="jeu-de-données-jouet-deux-gaussiennes" class="level2">
+<h2 class="anchored" data-anchor-id="jeu-de-données-jouet-deux-gaussiennes">1. Jeu de données jouet (deux gaussiennes)</h2>
+<div id="c00d63ba" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Chargement des bibliothèques</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np                  <span class="co"># pour la manipulation de tableaux et la génération des données</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt     <span class="co"># pour les visualisations</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.svm <span class="im">import</span> SVC         <span class="co"># le classifieur SVM et scikit-learn</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Importations supplémentaires </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> svm</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> datasets</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.utils <span class="im">import</span> shuffle</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split, GridSearchCV</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> fetch_lfw_people</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> confusion_matrix, ConfusionMatrixDisplay</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> time <span class="im">import</span> time</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>script_dir <span class="op">=</span> os.path.join(os.getcwd(), <span class="st">'script_python'</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>sys.path.append(script_dir)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> svm_source <span class="im">import</span> <span class="op">*</span>            <span class="co"># importe toutes les fonctions définies dans un fichier externe svm_source.py</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Préparation de l'environnement</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialise un standardisateur</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">"ignore"</span>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Supprime les avertissements</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Génération de données simulées – Créer deux classes de données gaussiennes</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Nombre d'échantillons par classe</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>n1 <span class="op">=</span> <span class="dv">200</span>               </span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>n2 <span class="op">=</span> <span class="dv">200</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Moyennes des distributions </span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>mu1 <span class="op">=</span> [<span class="fl">1.</span>, <span class="fl">1.</span>]</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>mu2 <span class="op">=</span> [<span class="op">-</span><span class="fl">1.</span><span class="op">/</span><span class="dv">2</span>, <span class="op">-</span><span class="fl">1.</span><span class="op">/</span><span class="dv">2</span>]</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Écarts-types</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>sigma1 <span class="op">=</span> [<span class="fl">0.9</span>, <span class="fl">0.9</span>]</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>sigma2 <span class="op">=</span> [<span class="fl">0.9</span>, <span class="fl">0.9</span>]</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Fixe la graine pour la reproductibilité</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Génère les données</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>X1, y1 <span class="op">=</span> rand_bi_gauss(n1, n2, mu1, mu2, sigma1, sigma2)</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualisations des données</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>plt.close(<span class="st">"all"</span>)</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>plt.ion()</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>plt.figure(<span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">5</span>))</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Premier ensemble de données'</span>)</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>plot_2d(X1, y1)</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Séparation des données et conversion explicite des labels en entiers</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> X1[::<span class="dv">2</span>]</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>Y_train <span class="op">=</span> y1[::<span class="dv">2</span>].astype(<span class="bu">int</span>)</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> X1[<span class="dv">1</span>::<span class="dv">2</span>]</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>Y_test <span class="op">=</span> y1[<span class="dv">1</span>::<span class="dv">2</span>].astype(<span class="bu">int</span>)</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="co"># Entraînement du modèle SV</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="co"># ajuste le modèle avec un noyau linéaire</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>clf <span class="op">=</span> SVC(kernel<span class="op">=</span><span class="st">'linear'</span>)</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>clf.fit(X_train, Y_train)</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="co"># Prédire les étiquettes pour la base de données de test</span></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> clf.predict(X_test)</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="co"># Vérifier le score obtenu</span></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>score <span class="op">=</span> clf.score(X_test, Y_test)</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Score : </span><span class="sc">%s</span><span class="st">'</span> <span class="op">%</span> score)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Score : 0.905</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Compte_rendu_STETSUN_THOMAS_files/figure-html/cell-2-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Le modèle SVM avec noyau linéaire atteint un score de <span class="math inline">\(0.905\)</span> sur l’échantillon test.</p>
+<p>Le graphique illustre le jeu de données constitué de deux classes bien séparées. On observe une frontière de décision qui distingue correctement la majorité des points : les deux groupes sont clairement identifiables, ce qui confirme la bonne capacité de généralisation du classifieur.</p>
+<div id="58684494" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Afficher la frontière de décision du SVM entrainé</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(xx):</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Classificateur&nbsp;: nécessaire pour éviter les avertissements dus à des problèmes de forme"""</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> clf.predict(xx.reshape(<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Créer une nouvelle figure </span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>frontiere(f, X_train, Y_train, w<span class="op">=</span><span class="va">None</span>, step<span class="op">=</span><span class="dv">50</span>, alpha_choice<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Figure 1"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Même procédure mais avec une recherche par grille</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> {<span class="st">'kernel'</span>: [<span class="st">'linear'</span>], <span class="st">'C'</span>: <span class="bu">list</span>(np.linspace(<span class="fl">0.001</span>, <span class="dv">3</span>, <span class="dv">21</span>))}</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>clf2 <span class="op">=</span> SVC()</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>clf_grid <span class="op">=</span> GridSearchCV(clf2, parameters, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>clf_grid.fit(X_train, Y_train)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Vérifiez le score obtenu</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(clf_grid.best_params_)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Score : </span><span class="sc">%s</span><span class="st">'</span> <span class="op">%</span> clf_grid.score(X_test, Y_test))</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f_grid(xx):</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Classificateur&nbsp;: nécessaire pour éviter les avertissements dus à des problèmes de forme"""</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> clf_grid.predict(xx.reshape(<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Afficher la nouvelle frontière de décision du modèle optimisé</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>frontiere(f_grid, X_train, Y_train, w<span class="op">=</span><span class="va">None</span>, step<span class="op">=</span><span class="dv">50</span>, alpha_choice<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Figure 2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{'C': np.float64(0.15095), 'kernel': 'linear'}
+Score : 0.9</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>Text(0.5, 1.0, 'Figure 2')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Compte_rendu_STETSUN_THOMAS_files/figure-html/cell-3-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Compte_rendu_STETSUN_THOMAS_files/figure-html/cell-3-output-4.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Après optimisation du paramètre C optimal via GridSearch, la performance reste stable avec un score de <span class="math inline">\(0.9\)</span>.</p>
+<p>Cette étape illustre le rôle de l’optimisation d’hyperparamètres, même si, sur un jeu simple, l’impact est limité.</p>
+<p>Les deux figures illustrent la frontière de décision d’un SVM linéaire appliqué au jeu de données. La figure 1 représente un modèle entraîné sans optimisation, qui sépare correctement les deux classes. Et la figure 2 quant à elle représente un modèle optimisé par validation croisée sur le paramètre C. Dans les deux cas, les zones colorées représentent les prédictions du classifieur, et la séparation diagonale traduit la capacité du modèle à distinguer efficacement les deux classes.</p>
+</section>
+<section id="jeu-de-données-iris" class="level2">
+<h2 class="anchored" data-anchor-id="jeu-de-données-iris">2. Jeu de données iris</h2>
+<section id="question-1-noyau-linéaire" class="level3">
+<h3 class="anchored" data-anchor-id="question-1-noyau-linéaire">Question 1 : noyau linéaire</h3>
+<div id="af30b3d4" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Chargement et préparation des données Iris </span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>iris <span class="op">=</span> datasets.load_iris()</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> iris.data               <span class="co"># Contient les 4 caractéristiques</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> scaler.fit_transform(X) <span class="co"># Standardise les données (centrées réduites)</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> iris.target             <span class="co"># Contient les étiquettes de classes</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtrage des classes et réduction dimensionnelle</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> X[y <span class="op">!=</span> <span class="dv">0</span>, :<span class="dv">2</span>]           <span class="co"># Supprime la classe 0 (Setosa) pour n'en garder que 2</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> y[y <span class="op">!=</span> <span class="dv">0</span>]</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Test de train fractionné 75 % entrainement et 25&nbsp;% pour le test</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> shuffle(X, y)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.25</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">###############################################################################</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajuster le modèle avec un noyau linéaire ou polynomial</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">###############################################################################</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Recherche du meilleur hyperparamètre C pour un noyau linéaire </span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> {<span class="st">'kernel'</span>: [<span class="st">'linear'</span>], <span class="st">'C'</span>: <span class="bu">list</span>(np.logspace(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">200</span>))}</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>clf_linear <span class="op">=</span> GridSearchCV(SVC(), parameters, cv<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>clf_linear.fit(X_train, y_train)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Évaluation du modèle avec le calcul du score</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Score de généralisation pour le noyau linéaire&nbsp;: </span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st">'</span> <span class="op">%</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>      (clf_linear.score(X_train, y_train),</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>       clf_linear.score(X_test, y_test)))</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualisation des données et de la frontière de décision</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">5</span>))</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>plot_2d(X, y)</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Ensemble de données sur l'iris"</span>)</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Fonction utilitaire pour prédire un point</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f_linear(xx):</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> clf_linear.predict(xx.reshape(<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Affichage de la frontière de décision du modèle optimisé</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>frontiere(f_linear, X, y)</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Noyau linéaire"</span>)</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>plt.draw()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Score de généralisation pour le noyau linéaire&nbsp;: 0.7066666666666667, 0.68</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Compte_rendu_STETSUN_THOMAS_files/figure-html/cell-4-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Compte_rendu_STETSUN_THOMAS_files/figure-html/cell-4-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Avec le jeu de données “iris” (classes 1 et 2, deux premières variables), l’utilisation d’un SVM à noyau linéaire donne une performance d’environ <span class="math inline">\(0.68\)</span> sur l’échantillon test. Après optimisation du paramètre de régularisation C via une recherche sur grille (GridSearchCV), le score de généralisation s’élève à environ <span class="math inline">\(0.71\)</span>.</p>
+<p>Le premier graphique représente les données du jeu Iris. Les points sont codés par couleur et forme selon leur classe, révélant un chevauchement partiel entre les deux groupes. Le second graphique illustre la frontière de décision d’un SVM linéaire optimisé. Les zones colorées indiquent les prédictions du modèle, et la séparation diagonale montre la capacité du classifieur à distinguer les deux classes dans cet espace réduit.</p>
+</section>
+<section id="question-2-noyau-polynomial" class="level3">
+<h3 class="anchored" data-anchor-id="question-2-noyau-polynomial">Question 2 : noyau polynomial</h3>
+<div id="b877eebe" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Définition des hyperparamètres pour le noyau polynomial</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>Cs <span class="op">=</span> <span class="bu">list</span>(np.logspace(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">5</span>))</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>gammas <span class="op">=</span> <span class="fl">10.</span> <span class="op">**</span> np.arange(<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>degrees <span class="op">=</span> np.r_[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Recherche du meilleur ensemble d'hyperparamètres</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> {<span class="st">'kernel'</span>: [<span class="st">'poly'</span>], <span class="st">'C'</span>: Cs, <span class="st">'gamma'</span>: gammas, <span class="st">'degree'</span>: degrees}</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>clf_poly <span class="op">=</span> GridSearchCV(SVC(), parameters, cv<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>clf_poly.fit(X_train, y_train)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Évaluation du modèle avec le calcul du score</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(clf_poly.best_params_)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Score de généralisation pour le noyau polynomial: </span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st">'</span> <span class="op">%</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>      (clf_poly.score(X_train, y_train),</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>       clf_poly.score(X_test, y_test)))</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Fonction utilitaire pour prédire un point avec le modèle polynomial</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f_poly(xx):</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> clf_poly.predict(xx.reshape(<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualisation de la frontière de décision</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>frontiere(f_poly, X, y)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Noyau polynomial"</span>)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>plt.draw()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{'C': np.float64(1.0), 'degree': np.int64(1), 'gamma': np.float64(10.0), 'kernel': 'poly'}
+Score de généralisation pour le noyau polynomial: 0.72, 0.76</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Compte_rendu_STETSUN_THOMAS_files/figure-html/cell-5-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>En utilisant un SVM à noyau polynomial et en ajustant le paramètre de régularisation C, les performances atteignent environ <span class="math inline">\(0,72\)</span> sans optimisation, et <span class="math inline">\(0,76\)</span> après recherche de l’hyperparamètre optimal.</p>
+<p>Le graphique ci-dessus illustre la frontière de décision non linéaire obtenue avec ce noyau, mieux adaptée à la complexité du jeu de données Iris. Contrairement au noyau linéaire, qui produit une séparation rectiligne, le noyau polynomial permet de capturer plus finement les zones de chevauchement entre les classes, améliorant ainsi la capacité de discrimination dans un espace réduit.</p>
+<p>La comparaison montre que le noyau polynomial offre une meilleure généralisation, grâce à sa flexibilité.</p>
+</section>
+</section>
+<section id="classification-de-visages" class="level2">
+<h2 class="anchored" data-anchor-id="classification-de-visages">3. Classification de visages</h2>
+<p>Pour notre analyse, nous avons utilisé un extrait prétraité du jeu de données “Labeled Faces in the Wild” (LFW), qui contient des images de visages de célébrités. Nous avons sélectionné uniquement deux individus (<em>Donald Rumsfeld</em> et <em>Colin Powell</em>) afin de réaliser une classification binaire.</p>
+<p>Pour améliorer la compatibilité et la clarté, nous avons apporté une petite modification à la ligne de code originale se trouvant dans <code>svm_script.py</code> :</p>
+<p>La ligne</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.r_[np.zeros(np.<span class="bu">sum</span>(idx0)), np.ones(np.<span class="bu">sum</span>(idx1))].astype(np.<span class="bu">int</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>a été remplacée par</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.r_[np.zeros(np.<span class="bu">sum</span>(idx0)), np.ones(np.<span class="bu">sum</span>(idx1))].astype(<span class="bu">int</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Voici la version finale du code qui a été employée pour charger l’ensemble des données :</p>
+<div id="2051c3f7" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Chargement du jeu de données LFW</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>lfw_people <span class="op">=</span> fetch_lfw_people(min_faces_per_person<span class="op">=</span><span class="dv">70</span>, resize<span class="op">=</span><span class="fl">0.4</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                              color<span class="op">=</span><span class="va">True</span>, funneled<span class="op">=</span><span class="va">False</span>, slice_<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                              download_if_missing<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraction des images et dimensions</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>images <span class="op">=</span> lfw_people.images</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>n_samples, h, w, n_colors <span class="op">=</span> images.shape</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># L'étiquette à prédire est l'identifiant de la personne</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>target_names <span class="op">=</span> lfw_people.target_names.tolist()</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Nous avons choisi ici une paire à classer : 'Donald Rumsfeld' et 'Colin Powell'</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>names <span class="op">=</span> [<span class="st">'Donald Rumsfeld'</span>, <span class="st">'Colin Powell'</span>]</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtrage des images pour les deux classes</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>idx0 <span class="op">=</span> (lfw_people.target <span class="op">==</span> target_names.index(names[<span class="dv">0</span>]))</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>idx1 <span class="op">=</span> (lfw_people.target <span class="op">==</span> target_names.index(names[<span class="dv">1</span>]))</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>images <span class="op">=</span> np.r_[images[idx0], images[idx1]]</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>n_samples <span class="op">=</span> images.shape[<span class="dv">0</span>]</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.r_[np.zeros(np.<span class="bu">sum</span>(idx0)), np.ones(np.<span class="bu">sum</span>(idx1))].astype(<span class="bu">int</span>)</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualisation d'un échantillon de données</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>plot_gallery(images, np.arange(<span class="dv">12</span>))</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraire des caractéristiques</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> (np.mean(images, axis<span class="op">=</span><span class="dv">3</span>)).reshape(n_samples, <span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Centrage et réduction des caractéristiques pour normaliser les données</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>X <span class="op">-=</span> np.mean(X, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>X <span class="op">/=</span> np.std(X, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Séparation en train/test</span></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>indices <span class="op">=</span> np.random.permutation(X.shape[<span class="dv">0</span>])</span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>train_idx, test_idx <span class="op">=</span> indices[:X.shape[<span class="dv">0</span>] <span class="op">//</span> <span class="dv">2</span>], indices[X.shape[<span class="dv">0</span>] <span class="op">//</span> <span class="dv">2</span>:]</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>X_train, X_test <span class="op">=</span> X[train_idx, :], X[test_idx, :]</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>y_train, y_test <span class="op">=</span> y[train_idx], y[test_idx]</span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>images_train, images_test <span class="op">=</span> images[</span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>    train_idx, :, :, :], images[test_idx, :, :, :]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Compte_rendu_STETSUN_THOMAS_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Après avoir chargé et préparé l’ensemble de données, chaque image reçoit une étiquette correspondant à son individu : 0 pour <em>Donald Rumsfeld</em> et 1 pour <em>Colin Powell</em>.</p>
+<p>Pour illustrer la diversité des visages et la qualité des images utilisées, un échantillon de <span class="math inline">\(12\)</span> images est affiché. Les caractéristiques extraites pour chaque image correspondent à la moyenne des intensités lumineuses des pixels sur les trois canaux de couleur, ce qui permet de réduire la complexité des données tout en conservant les informations essentielles pour la classification.</p>
+<p>Afin de faciliter l’apprentissage du classificateur, ces caractéristiques sont centrées et réduites, garantissant que chaque variable a une moyenne nulle et un écart-type égal à un. Enfin, l’ensemble de données est divisé de manière aléatoire en deux parties : un jeu d’entraînement et un jeu de test, contenant chacun environ la moitié des observations. Cette séparation permet d’évaluer de manière fiable les performances du modèle sur des images jamais vues pendant l’entraînement.</p>
+<section id="question-4-influence-du-paramètre-de-régularisation-c" class="level3">
+<h3 class="anchored" data-anchor-id="question-4-influence-du-paramètre-de-régularisation-c">Question 4 : influence du paramètre de régularisation C</h3>
+<p>Pour étudier l’influence du paramètre de régularisation C, nous avons utilisé un classificateur SVM à noyau linéaire. Ce paramètre contrôle l’équilibre entre la maximisation de la marge et la pénalisation des erreurs de classification.</p>
+<p>Nous avons testé plusieurs valeurs de C réparties logarithmiquement entre <span class="math inline">\(10^{-5}\)</span> et <span class="math inline">\(10^{5}\)</span>.</p>
+<div id="d8056964" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Affiche un titre pour indiquer que l'on travaille avec un noyau linéaire </span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"--- Linear kernel ---"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Fitting the classifier to the training set"</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Lance un chronomètre pour mesurer le temps d'exécution</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> time()</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Exploration du paramètre C</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>Cs <span class="op">=</span> <span class="fl">10.</span> <span class="op">**</span> np.arange(<span class="op">-</span><span class="dv">5</span>, <span class="dv">6</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>scores <span class="op">=</span> []</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> C <span class="kw">in</span> Cs:</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    clf <span class="op">=</span> SVC(kernel<span class="op">=</span><span class="st">"linear"</span>, C<span class="op">=</span>C)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    clf.fit(X_train, y_train)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    scores.append(clf.score(X_test, y_test))</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Sélection du meilleur C</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>ind <span class="op">=</span> np.argmax(scores)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Best C: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(Cs[ind]))</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualisation des meilleures performances </span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>plt.plot(Cs, scores)</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Paramètres de régularisation C"</span>)</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Scores d'apprentissage"</span>)</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>plt.xscale(<span class="st">"log"</span>)</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Best score: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(np.<span class="bu">max</span>(scores)))</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Préparation à la prédiction</span></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Predicting the people names on the testing set"</span>)</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> time()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>--- Linear kernel ---
+Fitting the classifier to the training set
+Best C: 0.001
+Best score: 0.8770949720670391
+Predicting the people names on the testing set</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Compte_rendu_STETSUN_THOMAS_files/figure-html/cell-7-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>L’étude de la performance en fonction de C montre qu’il existe une valeur optimale qui maximise le score de test. D’après le graphique, on peut remarquer que pour des valeurs de C trop faibles, le modèle est trop contraint et ne capture pas correctement les différences entre les classes. À l’inverse, pour des valeurs très élevées, le modèle devient trop sensible aux données d’entraînement.</p>
+<p>Afin de mieux analyser le comportement du modèle, nous avons représenté l’évolution de l’erreur de prédiction (plutôt que du score). La meilleure valeur de C est indiquée par un point rouge sur le graphique.</p>
+<div id="a5fd471d" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcul de l'erreur de prédiction pour différentes valeurs de C</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>errors <span class="op">=</span> []</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> C <span class="kw">in</span> Cs:</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    clf <span class="op">=</span> SVC(kernel<span class="op">=</span><span class="st">"linear"</span>, C<span class="op">=</span>C)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    clf.fit(X_train, y_train)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    errors.append(<span class="dv">1</span> <span class="op">-</span> clf.score(X_test, y_test))</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Sélection du meilleur C (minimisant l'erreur)</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>best_ind <span class="op">=</span> np.argmin(errors)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>best_C <span class="op">=</span> Cs[best_ind]</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>best_error <span class="op">=</span> errors[best_ind]</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>plt.plot(Cs, errors, marker<span class="op">=</span><span class="st">"o"</span>)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualisation de l'erreur en fonction de C</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>plt.scatter(best_C, best_error, color<span class="op">=</span><span class="st">"red"</span>, s<span class="op">=</span><span class="dv">100</span>, zorder<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>plt.xscale(<span class="st">"log"</span>)</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Paramètre de régularisation C"</span>)</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Erreur de prédiction"</span>)</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Influence de C sur la performance"</span>)</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Affichage des résultats</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Best C: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(Cs[best_ind]))</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Best error: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(np.<span class="bu">min</span>(errors)))</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Best accuracy(score): </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(<span class="dv">1</span> <span class="op">-</span> np.<span class="bu">min</span>(errors)))</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> time()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Compte_rendu_STETSUN_THOMAS_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Best C: 0.001
+Best error: 0.12290502793296088
+Best accuracy(score): 0.8770949720670391</code></pre>
+</div>
+</div>
+<p>Ces deux représentations sont complémentaires et mettent en évidence que :</p>
+<ul>
+<li><p>pour des C trop petits (<span class="math inline">\(10^{-5}\)</span>), le modèle sous-apprend (<em>underfitting</em>),</p></li>
+<li><p>pour des C trop grands (<span class="math inline">\(10^{5}\)</span>), il tend au surapprentissage (<em>overfitting</em>).</p></li>
+</ul>
+<p>Pour approfondir l’analyse, nous avons construit les matrices de confusion pour les deux cas extrêmes : <span class="math inline">\(C=1e^{-5}\)</span> et <span class="math inline">\(C=1e^{5}\)</span>.</p>
+<p>La matrice de confusion permet de visualiser la performance du classificateur de manière détaillée. Chaque ligne correspond aux classes réelles, et chaque colonne aux classes prédites. Elle montre ainsi non seulement le taux global de bonne classification, mais aussi quelles classes sont confondues par le modèle.</p>
+<div id="e226999e" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Matrice de confusion</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Cas 1 : SVM avec une régularisation très forte (C petit)</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>clf_small <span class="op">=</span> SVC(kernel<span class="op">=</span><span class="st">"linear"</span>, C<span class="op">=</span><span class="fl">1e-5</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>clf_small.fit(X_train, y_train)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>y_pred_small <span class="op">=</span> clf_small.predict(X_test)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>cm_small <span class="op">=</span> confusion_matrix(y_test, y_pred_small, labels<span class="op">=</span>clf_small.classes_)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>disp_small <span class="op">=</span> ConfusionMatrixDisplay(confusion_matrix<span class="op">=</span>cm_small, display_labels<span class="op">=</span>clf_small.classes_)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Cas 2 : SVM avec une régularisation très faible (C grand)</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>clf_large <span class="op">=</span> SVC(kernel<span class="op">=</span><span class="st">"linear"</span>, C<span class="op">=</span><span class="fl">1e5</span>)</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>clf_large.fit(X_train, y_train)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>y_pred_large <span class="op">=</span> clf_large.predict(X_test)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>cm_large <span class="op">=</span> confusion_matrix(y_test, y_pred_large, labels<span class="op">=</span>clf_large.classes_)</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>disp_large <span class="op">=</span> ConfusionMatrixDisplay(confusion_matrix<span class="op">=</span>cm_large, display_labels<span class="op">=</span>clf_large.classes_)</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualisation côte à côte des deux matrices</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 0 = Donald Rumsfeld, 1 = Colin Powell</span></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>class_names <span class="op">=</span> [<span class="st">'Donald Rumsfeld'</span>, <span class="st">'Colin Powell'</span>]</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>disp_small <span class="op">=</span> ConfusionMatrixDisplay(confusion_matrix<span class="op">=</span>cm_small,</span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>                                    display_labels<span class="op">=</span>class_names)</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>disp_small.plot(ax<span class="op">=</span>axes[<span class="dv">0</span>], cmap<span class="op">=</span><span class="st">"Blues"</span>, xticks_rotation<span class="op">=</span><span class="st">'vertical'</span>, colorbar<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Confusion matrix (C=1e-5)"</span>)</span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>disp_large <span class="op">=</span> ConfusionMatrixDisplay(confusion_matrix<span class="op">=</span>cm_large,</span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>                                    display_labels<span class="op">=</span>class_names)</span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>disp_large.plot(ax<span class="op">=</span>axes[<span class="dv">1</span>], cmap<span class="op">=</span><span class="st">"Blues"</span>, xticks_rotation<span class="op">=</span><span class="st">'vertical'</span>, colorbar<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Confusion matrix (C=1e5)"</span>)</span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Compte_rendu_STETSUN_THOMAS_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>L’observation confirme les tendances générales :</p>
+<ul>
+<li><p>avec <span class="math inline">\(C=10^{-5}\)</span>, le modèle prédit uniquement <em>Colin Powell</em> et ignore totalement <em>Donald Rumsfeld</em>,</p></li>
+<li><p>avec <span class="math inline">\(C=10^{5}\)</span>, les deux classes sont mieux distinguées, mais quelques erreurs persistent.</p></li>
+</ul>
+<p>Nous fournirons les mêmes résultats, mais sous forme numérique :</p>
+<div id="f40d950d" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== Classification report (C=1e-5) ==="</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test, y_pred_small, target_names<span class="op">=</span>class_names))</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== Classification report (C=1e5) ==="</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test, y_pred_large, target_names<span class="op">=</span>class_names))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== Classification report (C=1e-5) ===
+                 precision    recall  f1-score   support
+
+Donald Rumsfeld       0.00      0.00      0.00        54
+   Colin Powell       0.70      1.00      0.82       125
+
+       accuracy                           0.70       179
+      macro avg       0.35      0.50      0.41       179
+   weighted avg       0.49      0.70      0.57       179
+
+
+=== Classification report (C=1e5) ===
+                 precision    recall  f1-score   support
+
+Donald Rumsfeld       0.82      0.76      0.79        54
+   Colin Powell       0.90      0.93      0.91       125
+
+       accuracy                           0.88       179
+      macro avg       0.86      0.84      0.85       179
+   weighted avg       0.88      0.88      0.88       179
+</code></pre>
+</div>
+</div>
+<p>Les rapports de classification confirment que :</p>
+<ul>
+<li><p>pour <span class="math inline">\(C = 10^{-5}\)</span>, la précision et le rappel pour <em>Donald Rumsfeld</em> sont nuls, ce qui signifie que le modèle est totalement incapable de reconnaître cette classe,</p></li>
+<li><p>pour <span class="math inline">\(C = 10^{5}\)</span>, la performance s’améliore nettement avec une précision globale de <span class="math inline">\(88 \%\)</span>, bien que quelques erreurs subsistent pour les deux individus.</p></li>
+</ul>
+<p>Il est important de noter que l’accuracy de <span class="math inline">\(70\%\)</span> pour <span class="math inline">\(C = 10^{-5}\)</span> ne reflète pas la véritable performance du modèle. Ce résultat est dû au déséquilibre des classes : comme il y a davantage d’images de <em>Colin Powell</em>, le classificateur prédit systématiquement cette classe, atteignant ainsi artificiellement <span class="math inline">\(70\%\)</span> de bonnes réponses. Cette mesure ne traduit donc pas la capacité réelle de reconnaissance, mais uniquement un biais lié à la distribution des données.</p>
+<p>Pour évaluer correctement la performance du modèle, il est nécessaire d’utiliser des métriques telles que la précision (<em>precision</em>), le rappel (<em>recall</em>) et le <em>f1-score</em>. Pour <span class="math inline">\(C = 10^{5}\)</span>, ces métriques s’améliorent pour les deux classes (<em>Donald Rumsfeld</em> : precision <span class="math inline">\(= 0.82\)</span>, recall <span class="math inline">\(= 0.76\)</span> ; <em>Colin Powell</em> : precision <span class="math inline">\(= 0.90\)</span>, recall <span class="math inline">\(= 0.93\)</span>), indiquant une amélioration réelle de la qualité des prédictions.</p>
+<p>Nous comparons la précision du modèle avec le niveau de hasard (<em>baseline</em>), afin d’évaluer dans quelle mesure le choix de C améliore réellement les performances.</p>
+<div id="604c5ba7" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prédiction avec le meilleur modèle</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>clf <span class="op">=</span> SVC(kernel<span class="op">=</span><span class="st">"linear"</span>, C<span class="op">=</span>Cs[ind])</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>clf.fit(X_train, y_train)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> clf.predict(X_test)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Mesure de temps d'exécution</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"done in </span><span class="sc">%0.3f</span><span class="st">s"</span> <span class="op">%</span> (time() <span class="op">-</span> t0))</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcul du niveau de hasard</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Chance level : </span><span class="sc">%s</span><span class="st">"</span> <span class="op">%</span> <span class="bu">max</span>(np.mean(y), <span class="fl">1.</span> <span class="op">-</span> np.mean(y)))</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluation de la précision</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Accuracy : </span><span class="sc">%s</span><span class="st">"</span> <span class="op">%</span> clf.score(X_test, y_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>done in 1.313s
+Chance level : 0.6610644257703081
+Accuracy : 0.8770949720670391</code></pre>
+</div>
+</div>
+<p>Les résultats montrent que l’entraînement du modèle prend environ <span class="math inline">\(1\)</span> seconde. Le niveau de hasard est supérieur à <span class="math inline">\(60\%\)</span>, c’est-à-dire la précision obtenue si l’on prédit toujours la classe majoritaire. La précision réelle du modèle sur les données de test est supérieure à <span class="math inline">\(85\%\)</span>, ce qui confirme l’efficacité du choix de C.</p>
+<p>Enfin, nous avons comparé les prédictions et les coefficients appris par le classificateur pour trois cas : le meilleur C, une valeur très faible (<span class="math inline">\(C=10^{-5}\)</span>) et une valeur très grande (<span class="math inline">\(C=10^{5}\)</span>).</p>
+<div id="8dc7882a" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluation qualitative des prédictions</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>prediction_titles <span class="op">=</span> [title(y_pred[i], y_test[i], names)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                     <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(y_pred.shape[<span class="dv">0</span>])]</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Affiche galerie d'images test avec les titres générés</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>plot_gallery(images_test, prediction_titles)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualisation des coefficients du modèle SVM</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>plt.imshow(np.reshape(clf.coef_, (h, w)))</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraction des coefficients des deux modèles (C=1e-5 et C=1e5)</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>coef_small <span class="op">=</span> clf_small.coef_.ravel()</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>coef_large <span class="op">=</span> clf_large.coef_.ravel()</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualisation côte à côte des cartes de poids</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].imshow(coef_small.reshape(h, w), cmap<span class="op">=</span>plt.cm.seismic, interpolation<span class="op">=</span><span class="st">"nearest"</span>)</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Coefficients (C=1e-5)"</span>)</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].imshow(coef_large.reshape(h, w), cmap<span class="op">=</span>plt.cm.seismic, interpolation<span class="op">=</span><span class="st">"nearest"</span>)</span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Coefficients (C=1e5)"</span>)</span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Compte_rendu_STETSUN_THOMAS_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Compte_rendu_STETSUN_THOMAS_files/figure-html/cell-12-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Compte_rendu_STETSUN_THOMAS_files/figure-html/cell-12-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Ces visualisations mettent en évidence plusieurs points.</p>
+<p>Pour <span class="math inline">\(C = 10^{-5}\)</span>, l’image du coefficient est plus floue et les points rouges (importants) et bleus (sans importance) de l’image sont plus grands, donc plus généraux. Le modèle privilégie d’abord les caractéristiques les plus importantes, telles que la taille du front, la ligne des cheveux, la forme du nez et des lèvres, le cou et l’arrière-plan, ce dernier pouvant être récurrent dans l’échantillon.</p>
+<p>Pour <span class="math inline">\(C = 10^{5}\)</span>, le modèle devient beaucoup plus sensible et fragmente toutes les parties de l’image, les points rouges et bleus apparaissant beaucoup plus petits.</p>
+<p>Cette comparaison illustre clairement la différence entre sous-apprentissage et surapprentissage et montre comment le paramètre C contrôle la sensibilité du modèle aux caractéristiques des données.</p>
+</section>
+<section id="question-5-ajout-de-variables-de-nuisance" class="level3">
+<h3 class="anchored" data-anchor-id="question-5-ajout-de-variables-de-nuisance">Question 5 : ajout de variables de nuisance</h3>
+<p>Dans cette partie, nous étudions l’effet de l’ajout de variables de nuisance, c’est-à-dire des variables sans rapport avec la tâche de classification. Nous commençons par définir une fonction pour entraîner un SVM à noyau linéaire en validation croisée.</p>
+<div id="4aa1ee73" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fonction de validation croisée avec SVM linéaire </span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_svm_cv(_X, _y):</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    _indices <span class="op">=</span> np.random.permutation(_X.shape[<span class="dv">0</span>])</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    _train_idx, _test_idx <span class="op">=</span> _indices[:_X.shape[<span class="dv">0</span>] <span class="op">//</span> <span class="dv">2</span>], _indices[_X.shape[<span class="dv">0</span>] <span class="op">//</span> <span class="dv">2</span>:]</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    _X_train, _X_test <span class="op">=</span> _X[_train_idx, :], _X[_test_idx, :]</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    _y_train, _y_test <span class="op">=</span> _y[_train_idx], _y[_test_idx]</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    _parameters <span class="op">=</span> {<span class="st">'kernel'</span>: [<span class="st">'linear'</span>], <span class="st">'C'</span>: <span class="bu">list</span>(np.logspace(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">5</span>))}</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    _svr <span class="op">=</span> svm.SVC()</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    _clf_linear <span class="op">=</span> GridSearchCV(_svr, _parameters)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    _clf_linear.fit(_X_train, _y_train)</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Generalization score for linear kernel: </span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st"> </span><span class="ch">\n</span><span class="st">'</span> <span class="op">%</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>          (_clf_linear.score(_X_train, _y_train), _clf_linear.score(_X_test, _y_test)))</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Évaluation sans variables de nuisance </span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Score sans variable de nuisance"</span>)</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>run_svm_cv(X, y)</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajout de 300 variables aléatoires</span></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Score avec variable de nuisance"</span>)</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>n_features <span class="op">=</span> X.shape[<span class="dv">1</span>]</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>noise <span class="op">=</span> sigma <span class="op">*</span> np.random.randn(n_samples, <span class="dv">300</span>, ) </span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Avec des coefficients gaussiens de sigma-type</span></span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>X_noisy <span class="op">=</span> np.concatenate((X, noise), axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>X_noisy <span class="op">=</span> X_noisy[np.random.permutation(X.shape[<span class="dv">0</span>])]</span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>np.random.shuffle(X_noisy.T)</span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>run_svm_cv(X_noisy, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Score sans variable de nuisance
+Generalization score for linear kernel: 1.0, 0.9162011173184358 
+
+Score avec variable de nuisance
+Generalization score for linear kernel: 1.0, 0.553072625698324 
+</code></pre>
+</div>
+</div>
+<p>Les résultats nous montrent que sans variables de nuisance, le SVM obtient un score d’environ <span class="math inline">\(0.92\)</span> sur l’échantillon de test. En revanche, après l’ajout de <span class="math inline">\(300\)</span> variables aléatoires, le score chute à environ <span class="math inline">\(0.55\)</span>, soit proche du niveau du hasard. Ce contraste illustre bien que l’ajout de dimensions inutiles entraine un surapprentissage et dégrade sa capacité de généralisation.</p>
+<p>Pour rendre l’analyse plus robuste, nous fixons un <code>random_state=42</code> et faisons varier le nombre de variables de nuisance.</p>
+<div id="1cd4cb13" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fonction de validation croisée avec SVM linéaire</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_svm_cv(_X, _y, random_state<span class="op">=</span><span class="dv">42</span>):</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    rng <span class="op">=</span> np.random.RandomState(random_state)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    indices <span class="op">=</span> rng.permutation(_X.shape[<span class="dv">0</span>])</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    train_idx, test_idx <span class="op">=</span> indices[:_X.shape[<span class="dv">0</span>] <span class="op">//</span> <span class="dv">2</span>], indices[_X.shape[<span class="dv">0</span>] <span class="op">//</span> <span class="dv">2</span>:]</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    X_train, X_test <span class="op">=</span> _X[train_idx, :], _X[test_idx, :]</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    y_train, y_test <span class="op">=</span> _y[train_idx], _y[test_idx]</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    parameters <span class="op">=</span> {<span class="st">'kernel'</span>: [<span class="st">'linear'</span>], <span class="st">'C'</span>: <span class="bu">list</span>(np.logspace(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">5</span>))}</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    svr <span class="op">=</span> svm.SVC()</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    clf <span class="op">=</span> GridSearchCV(svr, parameters)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    clf.fit(X_train, y_train)</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> clf.score(X_test, y_test)</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Expérience : impact du bruit sur la précision</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>noise_dims <span class="op">=</span> np.arange(<span class="dv">10</span>, <span class="dv">1001</span>, <span class="dv">25</span>)</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>test_scores <span class="op">=</span> []</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.RandomState(<span class="dv">42</span>)</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n_noise <span class="kw">in</span> noise_dims:</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>    noise <span class="op">=</span> rng.randn(X.shape[<span class="dv">0</span>], n_noise)</span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>    X_aug <span class="op">=</span> np.concatenate((X, noise), axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>    score <span class="op">=</span> run_svm_cv(X_aug, y)</span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>    test_scores.append(score)</span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualisation des résultats</span></span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>plt.plot(noise_dims, test_scores, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Influence du nombre de variables de nuisance sur l'accuracy"</span>)</span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Nombre de variables de nuisance"</span>)</span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Accuracy sur l'échantillon de test"</span>)</span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Compte_rendu_STETSUN_THOMAS_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Le graphique obtenu montre que, pour un faible nombre de variables de nuisance, la précision (<em>accuracy</em>) reste relativement élevée, confirmant que le modèle exploite toujours efficacement les caractéristiques pertinentes. Lorsque le nombre de variables de nuisance augmente, des fluctuations de la précision sont observées sur l’échantillon de test, en raison de la nature aléatoire du bruit ajouté et du choix du paramètre optimal C à chaque itération.</p>
+<p>La comparaison sans bruit et avec <span class="math inline">\(300\)</span> variables de nuisance montre clairement une dégradation des performances du modèle.</p>
+<p>Cependant, la tendance générale du graphique n’indique pas que l’augmentation du nombre de variables de nuisance jusqu’à <span class="math inline">\(1000\)</span> entraînera une baisse supplémentaire de la précision. Pour un grand nombre de variables de bruit indépendantes, le SVM linéaire en lisse l’influence et la performance se stabilise à un niveau proche de celui d’origine.</p>
+</section>
+<section id="question-6-pca" class="level3">
+<h3 class="anchored" data-anchor-id="question-6-pca">Question 6 : PCA</h3>
+<p>Pour étudier l’influence du paramètre C sur la précision des résultats, nous avons utilisé la partie de code suivante qui est disponible dans <code>svm_script.py</code>.</p>
+<p>L’exécution complète du script peut être longue, car pour chaque nombre de composantes PCA, plusieurs opérations sont effectuées :</p>
+<ol type="1">
+<li><p>Transformation du jeu de données via PCA avec <code>svd_solver='randomized'</code> ;<br>
+</p></li>
+<li><p>Entraînement et test d’un SVM avec validation croisée sur la moitié des données ;</p></li>
+<li><p>Sauvegarde des résultats dans un fichier pour analyse ultérieure.</p></li>
+</ol>
+<p>L’utilisation du paramètre <code>svd_solver='randomized'</code> permet d’accélérer le calcul de la PCA sur de grands ensembles de données tout en conservant une approximation précise des composantes principales. Pour l’ensemble des composantes allant de <span class="math inline">\(2\)</span> à <span class="math inline">\(200\)</span> (par pas de <span class="math inline">\(10\)</span>), le calcul peut ainsi durer plusieurs heures.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparaison du temps et de la précision pour les composants de 2 à 200</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time <span class="im">as</span> tm</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Tous les numéros à vérifier</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>components_list <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">2</span>, <span class="dv">201</span>, <span class="dv">10</span>))</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Pour la sauvegarde automatique</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="st">"pca_results_autosave_copy_2.csv"</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> os.path.exists(filename):</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Télécharger les résultats existants</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    components_done, accuracies, times <span class="op">=</span> [], [], []</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(filename, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>        reader <span class="op">=</span> csv.DictReader(f)</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> row <span class="kw">in</span> reader:</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>            components_done.append(<span class="bu">int</span>(row[<span class="st">"n_components"</span>]))</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>            accuracies.append(<span class="bu">float</span>(row[<span class="st">"accuracy"</span>]))</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>            times.append(<span class="bu">float</span>(row[<span class="st">"time_seconds"</span>]))</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Composants </span><span class="sc">{</span><span class="bu">len</span>(components_done)<span class="sc">}</span><span class="ss"> chargés déjà traités"</span>)</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>    components_done, accuracies, times <span class="op">=</span> [], [], []</span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Score apres reduction de dimension (svd_solver='randomized')</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>accuracies <span class="op">=</span> []  <span class="co"># pour le score au test</span></span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> []       <span class="co"># pour le temps</span></span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Score apres reduction de dimension (svd_solver='randomized')</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n_components <span class="kw">in</span> components_list:</span>
+<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Sauter ce que vous avez déjà</span></span>
+<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n_components <span class="kw">in</span> components_done:</span>
+<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">continue</span></span>
+<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Nombre de composantes PCA: </span><span class="sc">{</span>n_components<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># PCA avec solveur aléatoire&nbsp;: ce que demande le professeur</span></span>
+<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a>    pca <span class="op">=</span> PCA(n_components<span class="op">=</span>n_components, svd_solver<span class="op">=</span><span class="st">'randomized'</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a>    X_pca <span class="op">=</span> pca.fit_transform(X_noisy)</span>
+<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb26-41"><a href="#cb26-41" aria-hidden="true" tabindex="-1"></a>    t0 <span class="op">=</span> tm.time()</span>
+<span id="cb26-42"><a href="#cb26-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># En espérant que run_svm_cv renvoie test_score</span></span>
+<span id="cb26-43"><a href="#cb26-43" aria-hidden="true" tabindex="-1"></a>    test_score <span class="op">=</span> run_svm_cv(X_pca, y)  </span>
+<span id="cb26-44"><a href="#cb26-44" aria-hidden="true" tabindex="-1"></a>    elapsed <span class="op">=</span> tm.time() <span class="op">-</span> t0</span>
+<span id="cb26-45"><a href="#cb26-45" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb26-46"><a href="#cb26-46" aria-hidden="true" tabindex="-1"></a>    components_done.append(n_components)</span>
+<span id="cb26-47"><a href="#cb26-47" aria-hidden="true" tabindex="-1"></a>    accuracies.append(test_score)  <span class="co"># sauvegarder la précision</span></span>
+<span id="cb26-48"><a href="#cb26-48" aria-hidden="true" tabindex="-1"></a>    times.append(elapsed)          <span class="co"># sauvegarder le temps</span></span>
+<span id="cb26-49"><a href="#cb26-49" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb26-50"><a href="#cb26-50" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Test score: </span><span class="sc">{</span>test_score<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb26-51"><a href="#cb26-51" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Temps de calcul: </span><span class="sc">{</span>elapsed<span class="sc">:.3f}</span><span class="ss"> secondes</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb26-52"><a href="#cb26-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-53"><a href="#cb26-53" aria-hidden="true" tabindex="-1"></a>     <span class="co"># Sauvegarde automatique</span></span>
+<span id="cb26-54"><a href="#cb26-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(filename, <span class="st">"w"</span>, newline<span class="op">=</span><span class="st">""</span>) <span class="im">as</span> f:</span>
+<span id="cb26-55"><a href="#cb26-55" aria-hidden="true" tabindex="-1"></a>        writer <span class="op">=</span> csv.writer(f)</span>
+<span id="cb26-56"><a href="#cb26-56" aria-hidden="true" tabindex="-1"></a>        writer.writerow([<span class="st">"n_components"</span>, <span class="st">"accuracy"</span>, <span class="st">"time_seconds"</span>])</span>
+<span id="cb26-57"><a href="#cb26-57" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> n, acc, t <span class="kw">in</span> <span class="bu">zip</span>(components_done, accuracies, times):</span>
+<span id="cb26-58"><a href="#cb26-58" aria-hidden="true" tabindex="-1"></a>            writer.writerow([n, acc, t])</span>
+<span id="cb26-59"><a href="#cb26-59" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Les résultats intermédiaires sont enregistrés dans </span><span class="sc">{</span>filename<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb26-60"><a href="#cb26-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-61"><a href="#cb26-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-62"><a href="#cb26-62" aria-hidden="true" tabindex="-1"></a><span class="co"># Graphique</span></span>
+<span id="cb26-63"><a href="#cb26-63" aria-hidden="true" tabindex="-1"></a>fig, ax1 <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">5</span>))</span>
+<span id="cb26-64"><a href="#cb26-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-65"><a href="#cb26-65" aria-hidden="true" tabindex="-1"></a><span class="co"># Précision</span></span>
+<span id="cb26-66"><a href="#cb26-66" aria-hidden="true" tabindex="-1"></a>color <span class="op">=</span> <span class="st">'tab:blue'</span></span>
+<span id="cb26-67"><a href="#cb26-67" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'Nombre de composantes PCA'</span>)</span>
+<span id="cb26-68"><a href="#cb26-68" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'Précision'</span>, color<span class="op">=</span>color)</span>
+<span id="cb26-69"><a href="#cb26-69" aria-hidden="true" tabindex="-1"></a>ax1.plot(components_list, accuracies, marker<span class="op">=</span><span class="st">'o'</span>, color<span class="op">=</span>color, label<span class="op">=</span><span class="st">'Précision'</span>)</span>
+<span id="cb26-70"><a href="#cb26-70" aria-hidden="true" tabindex="-1"></a>ax1.tick_params(axis<span class="op">=</span><span class="st">'y'</span>, labelcolor<span class="op">=</span>color)</span>
+<span id="cb26-71"><a href="#cb26-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-72"><a href="#cb26-72" aria-hidden="true" tabindex="-1"></a><span class="co"># Temps</span></span>
+<span id="cb26-73"><a href="#cb26-73" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> ax1.twinx()</span>
+<span id="cb26-74"><a href="#cb26-74" aria-hidden="true" tabindex="-1"></a>color <span class="op">=</span> <span class="st">'tab:red'</span></span>
+<span id="cb26-75"><a href="#cb26-75" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'Temps (s)'</span>, color<span class="op">=</span>color)</span>
+<span id="cb26-76"><a href="#cb26-76" aria-hidden="true" tabindex="-1"></a>ax2.plot(components_list, times, marker<span class="op">=</span><span class="st">'s'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, color<span class="op">=</span>color, label<span class="op">=</span><span class="st">'Temps'</span>)</span>
+<span id="cb26-77"><a href="#cb26-77" aria-hidden="true" tabindex="-1"></a>ax2.tick_params(axis<span class="op">=</span><span class="st">'y'</span>, labelcolor<span class="op">=</span>color)</span>
+<span id="cb26-78"><a href="#cb26-78" aria-hidden="true" tabindex="-1"></a>ax2.set_yscale(<span class="st">'log'</span>)  <span class="co"># échelle de temps logarithmique</span></span>
+<span id="cb26-79"><a href="#cb26-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-80"><a href="#cb26-80" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Influence du nombre de composantes PCA sur la précision et le temps"</span>)</span>
+<span id="cb26-81"><a href="#cb26-81" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<figure style="display:inline-block; width:48%; margin-right:2%;" class="figure">
+<img src="images/output_q6_1.png" alt="first try" style="width:100%;" class="figure-img">
+<figcaption style="text-align:center;">
+Figure 1
+</figcaption>
+</figure>
+<figure style="display:inline-block; width:48%;" class="figure">
+<img src="images/output_q6_2.png" alt="second try" style="width:100%;" class="figure-img">
+<figcaption style="text-align:center;">
+Figure 2
+</figcaption>
+</figure>
+<p>Sur les graphiques, l’axe X représente le nombre de composantes PCA, l’axe Y (gauche) indique la précision (courbe bleue) et l’axe Y (droite) montre le temps de calcul en secondes (courbe rouge, échelle logarithmique).</p>
+<p>La fonction <code>sklearn.decomposition.PCA(svd_solver='randomized')</code> utilisée introduit une légère variabilité à chaque exécution en raison de l’initialisation aléatoire, ce qui peut rendre la qualité de la classification instable.</p>
+<p>Le temps de traitement reste cependant globalement stable. Il atteint un pic entre <span class="math inline">\(32\)</span> et <span class="math inline">\(52\)</span> composantes, car pour un petit nombre de composantes, le PCA conserve le maximum de variance des caractéristiques originales. À ce stade, le SVM doit traiter encore une quantité significative d’informations utiles pour construire l’hyperplan, ce qui augmente la charge de calcul. Ensuite, lorsque le nombre de composantes augmente, le PCA répartit les caractéristiques significatives sur davantage de dimensions, réduisant la charge pour le SVM et entraînant une diminution du temps de traitement.</p>
+<p><img src="images/output_q6_0_old.png" style="display:inline-block; width:100%;"></p>
+<p>On peut également remarquer que cette tendance se maintient lorsqu’on entraîne le modèle sur un autre jeu de données, par exemple pour la comparaison de deux autres personnes : <em>Tony Blair</em> et <em>Colin Powell</em>, où l’on observe une dépendance similaire entre le nombre de composantes PCA et la précision ainsi que le temps de calcul.</p>
+</section>
+<section id="question-7-biais-dans-le-prétraitement" class="level3">
+<h3 class="anchored" data-anchor-id="question-7-biais-dans-le-prétraitement">Question 7 : biais dans le prétraitement</h3>
+<p>Dans le prétraitement initial, la normalisation était appliquée avant la séparation des échantillons d’entraînement et de test. La moyenne et l’écart-type ont donc été calculés sur l’ensemble du jeu de données, provoquant une fuite d’information de l’échantillon de test vers l’entraînement. Ce biais de prétraitement peut conduire à une estimation trop optimiste de la précision du modèle.</p>
+<p>Par curiosité, nous avons voulu vérifier l’effet de cette correction, nous avons séparé les données en ensembles d’entraînement et de test avant normalisation. La moyenne et l’écart-type ont été calculés uniquement sur l’ensemble d’entraînement, puis utilisés pour normaliser l’échantillon de test.</p>
+<p>Pour le rapport, nous vous présentons uniquement les résultats générés avec cette version corrigée, car l’exécution complète du code est longue. Nous avons juste changé la partie suivante et refait tourner pour les questions 4, 5 et 6.</p>
+<div id="c5b43a9a" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>lfw_people <span class="op">=</span> fetch_lfw_people(min_faces_per_person<span class="op">=</span><span class="dv">70</span>, resize<span class="op">=</span><span class="fl">0.4</span>,</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>                              color<span class="op">=</span><span class="va">True</span>, funneled<span class="op">=</span><span class="va">False</span>, slice_<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                              download_if_missing<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># data_home='.'</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Introspecter les tableaux d'images pour trouver les formes (pour le traçage)</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>images <span class="op">=</span> lfw_people.images</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>n_samples, h, w, n_colors <span class="op">=</span> images.shape</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="co"># L'étiquette à prédire est l'identifiant de la personne</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>target_names <span class="op">=</span> lfw_people.target_names.tolist()</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="co">####################################################################</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Choisissez une paire à classer</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>names <span class="op">=</span> [<span class="st">'Donald Rumsfeld'</span>, <span class="st">'Colin Powell'</span>]</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>idx0 <span class="op">=</span> (lfw_people.target <span class="op">==</span> target_names.index(names[<span class="dv">0</span>]))</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>idx1 <span class="op">=</span> (lfw_people.target <span class="op">==</span> target_names.index(names[<span class="dv">1</span>]))</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>images <span class="op">=</span> np.r_[images[idx0], images[idx1]]</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>n_samples <span class="op">=</span> images.shape[<span class="dv">0</span>]</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.r_[np.zeros(np.<span class="bu">sum</span>(idx0)), np.ones(np.<span class="bu">sum</span>(idx1))].astype(<span class="bu">int</span>)</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Tracer un échantillon de données</span></span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>plot_gallery(images, np.arange(<span class="dv">12</span>))</span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Séparer d'abord les données</span></span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>indices <span class="op">=</span> np.random.permutation(X.shape[<span class="dv">0</span>])</span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>train_idx, test_idx <span class="op">=</span> indices[:X.shape[<span class="dv">0</span>] <span class="op">//</span> <span class="dv">2</span>], indices[X.shape[<span class="dv">0</span>] <span class="op">//</span> <span class="dv">2</span>:]</span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>X_train, X_test <span class="op">=</span> X[train_idx, :], X[test_idx, :]</span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalisation uniquement pour le train</span></span>
+<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a>mean <span class="op">=</span> np.mean(X_train, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a>std <span class="op">=</span> np.std(X_train, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> (X_train <span class="op">-</span> mean) <span class="op">/</span> std</span>
+<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> (X_test <span class="op">-</span> mean) <span class="op">/</span> std</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Compte_rendu_STETSUN_THOMAS_files/figure-html/cell-15-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="question-4" class="level4">
+<h4 class="anchored" data-anchor-id="question-4">Question 4</h4>
+<p><img src="images/output_q4_apres_q7.png" style="display:inline-block"></p>
+<p>Après correction, la meilleure valeur du paramètre C a fortement diminué, passant de <span class="math inline">\(C = 10^{-3}\)</span> à <span class="math inline">\(C = 10^{-5}\)</span>. Cette baisse reflète une évaluation plus réaliste de la généralisation du modèle et non une dégradation de ses performances.</p>
+<p><img src="images/output_matrix_ap_q7.png" style="display:inline-block"></p>
+<p><img src="images/output_numeric_ap_q7.png" style="display:inline-block"></p>
+<p>En comparant les nouveaux résultats avec les précédents, on constate une diminution significative de la précision du modèle.</p>
+<ul>
+<li><p>Pour <span class="math inline">\(C = 10^{-5}\)</span>, la précision est passée de <span class="math inline">\(0.70\)</span> à <span class="math inline">\(0.68\)</span>. Le modèle ne reconnaît toujours pas la classe <em>Donald Rumsfeld</em>, tandis que la précision et le rappel pour <em>Colin Powell</em> restent élevés.</p></li>
+<li><p>Pour <span class="math inline">\(C = 10^{-}\)</span>, a baisse est plus marquée : la précision chute de <span class="math inline">\(0.88\)</span> à <span class="math inline">\(0.50\)</span>. Le modèle distingue moins bien les deux classes : précision et rappel pour <em>Donald Rumsfeld</em> et <em>Colin Powell</em> sont fortement réduits.</p></li>
+</ul>
+<p>Ces changements reflètent une évaluation plus réaliste de la généralisation, et non une dégradation intrinsèque du modèle.</p>
+<p><img src="images/output_chance_ap_q7.png" style="display:inline-block"></p>
+<p><img src="images/output_12_images_ap_q7.png" style="display:inline-block"></p>
+<p>Nous pouvons remarquer que l’image sont devenues plus fragmentées, ce qui est encore dû au changement dans le modèle entraîné.</p>
+</section>
+<section id="question-5" class="level4">
+<h4 class="anchored" data-anchor-id="question-5">Question 5</h4>
+<p><img src="images/output_q5_apres_q7.png" style="display:inline-block"></p>
+<p>Sans variables de nuisance, le SVM atteint une précision d’environ <span class="math inline">\(0.89\)</span>. Après l’ajout de <span class="math inline">\(300\)</span> variables aléatoires, la précision chute à <span class="math inline">\(0.53\)</span>, proche du niveau du hasard. Cette diminution s’explique par la correction de l’ordre des opérations : séparation des ensembles avant normalisation, empêchant le modèle d’utiliser des informations du test pour le scaling.</p>
+</section>
+<section id="question-6" class="level4">
+<h4 class="anchored" data-anchor-id="question-6">Question 6</h4>
+<p><img src="images/output_q6_apres_q7.png" style="display:inline-block"></p>
+<p>La correction du prétraitement réduit le temps total d’exécution, puisque la normalisation ne s’applique plus à l’ensemble complet des données. La tendance générale reste la même : pic de temps entre <span class="math inline">\(32\)</span> et <span class="math inline">\(52\)</span> composantes PCA, puis diminution progressive.</p>
+<p>Les visualisations confirment que le modèle est légèrement moins fragmenté et que la performance mesurée est désormais réaliste.</p>
+</section>
+</section>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

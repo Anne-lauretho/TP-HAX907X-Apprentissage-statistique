@@ -17,6 +17,7 @@ Le TP couvre :
 ## Structure du projet
 - `Compte_rendu_STETSUN_THOMAS.html` : rapport final en HTML.
 - `Compte_rendu_STETSUN_THOMAS.qmd` : fichier Quarto du compte-rendu.
+- `Compte_rendu_stetsun_thomas.pdf` : fichier pdf du compte-rendu (en plus).
 -  Un dossier `script_python` contenant : le script principal pour le SVM `svm_script.py` et  les fonctions utilitaires `svm_source.py `.
 - `csv_files/` : fichiers CSV de données.
 - `images/` : figures et images générées.
@@ -80,8 +81,8 @@ Voici un schéma de l'architecture de notre projet, détaillant l'emplacement de
     │    │    └── svm_source.py
     │    ├── .gitignore
     │    ├── Compte_rendu_STETSUN_THOMAS.html
-    │    ├── Compte_rendu_STETSUN_THOMAS.pdf
     │    ├── Compte_rendu_STETSUN_THOMAS.qmd
+    │    ├── Compte_rendu_stetsun_thomas.pdf
     │    ├── LICENSE
     │    ├── README.md
     │    └── requirements.txt
